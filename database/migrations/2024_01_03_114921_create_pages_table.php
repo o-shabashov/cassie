@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->text('title');
             $table->jsonb('sections');
+            $table->string('url');
             $table->softDeletes();
             $table->timestamps();
         });
