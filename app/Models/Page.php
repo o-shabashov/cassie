@@ -20,4 +20,17 @@ class Page extends Model
     protected $casts = [
         'sections' => 'array',
     ];
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'sections' => $this->sections,
+        ];
+    }
 }
