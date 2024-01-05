@@ -21,8 +21,15 @@ class Page extends Model
         'sections' => 'array',
     ];
 
+    protected $hidden = [
+        'searchable',
+    ];
+
     public function toSearchableArray(): array
     {
-        return $this->toArray();
+        return [
+            'title' => $this->title,
+            'sections' => $this->sections,
+        ];
     }
 }
