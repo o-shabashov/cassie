@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/search', function (Request $request) {
-    return Page::search('rerum')->get();
+    return Page::search('test')->get();
 });

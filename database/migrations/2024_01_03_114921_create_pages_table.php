@@ -16,10 +16,11 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        DB::statement('CREATE INDEX posts_searchable_index ON pages USING GIN (searchable)');
+        DB::statement('ALTER TABLE pages ADD searchable tsvector NULL');
         DB::statement('CREATE INDEX posts_searchable_index ON pages USING GIN (searchable)');
 
         // Or alternatively
-        // DB::statement('CREATE INDEX posts_searchable_index ON posts USING GIST (searchable)');
+//        DB::statement('ALTER TABLE pages ADD searchable tsvector NULL');
+//        DB::statement('CREATE INDEX posts_searchable_index ON posts USING GIST (searchable)');
     }
 };
