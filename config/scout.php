@@ -99,4 +99,26 @@ return [
     */
 
     'identify' => env('SCOUT_IDENTIFY', false),
+
+    'typesense' => [
+        'api_key'         => 'typesense',
+        'nodes'           => [
+            [
+                'host'     => 'typesense',
+                'port'     => '8108',
+                'path'     => '',
+                'protocol' => 'http',
+            ],
+        ],
+        'nearest_node'    => [
+            'host'     => 'typesense',
+            'port'     => '8108',
+            'path'     => '',
+            'protocol' => 'http',
+        ],
+        'connection_timeout_seconds'   => 2,
+        'healthcheck_interval_seconds' => 30,
+        'num_retries'                  => 3,
+        'retry_interval_seconds'       => 1,
+    ],
 ];

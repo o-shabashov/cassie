@@ -28,6 +28,8 @@ services:
             - mailpit
             - selenium
             - minio
+            - typesense
+
     pgsql:
         image: 'postgres:15'
         ports:
@@ -53,6 +55,7 @@ services:
                 - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
+
     redis:
         image: 'redis:alpine'
         ports:
@@ -68,12 +71,14 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+
     memcached:
         image: 'memcached:alpine'
         ports:
             - '${FORWARD_MEMCACHED_PORT:-11211}:11211'
         networks:
             - sail
+
     mailpit:
         image: 'axllent/mailpit:latest'
         ports:
@@ -81,6 +86,7 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
+
     selenium:
         image: seleniarm/standalone-chromium
         extra_hosts:
@@ -89,6 +95,7 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+
     minio:
         image: 'minio/minio:latest'
         ports:
@@ -110,11 +117,32 @@ services:
                 - 'http://localhost:9000/minio/health/live'
             retries: 3
             timeout: 5s
+
+    typesense:
+        image: typesense/typesense:0.25.2
+        restart: on-failure
+        ports:
+            - "8108:8108"
+        volumes:
+            - 'sail-typesense:/data'
+        command: '--data-dir /data --api-key=typesense --enable-cors'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - curl
+                - 'http://localhost:8108/health'
+            retries: 3
+            timeout: 5s
+
 networks:
     sail:
         driver: bridge
 volumes:
     sail-pgsql:
+        driver: local
+    sail-typesense:
         driver: local
     sail-redis:
         driver: local
