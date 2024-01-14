@@ -31,7 +31,6 @@ class Page extends Model
             'id'         => (string) $this->id,
             'title'      => $this->title,
             'sections'   => $this->sections,
-            'created_at' => $this->created_at->timestamp,
         ];
     }
 
