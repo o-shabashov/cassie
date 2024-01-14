@@ -29,5 +29,8 @@ class SearchTest extends TestCase
 
         $this->assertEquals('yoda', Page::search('fake')->get()->first()->title);
         $this->assertEquals('anakin', Page::search('should you')->get()->first()->title);
-        $this->assertEquals('dart', Page::search('suit')->get()->first()->title);}
+        $this->assertEquals('dart', Page::search('suit')->get()->first()->title);
+        $this->assertEquals('dart', Page::search('red')->get()->first()->title);
+        $this->assertEquals('dart', Page::search('il')->get()->first()->title);
+    }
 }
