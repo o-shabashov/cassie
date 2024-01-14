@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+        // Only for the database and pgsql drivers
         DB::statement('ALTER TABLE pages ADD searchable tsvector NULL');
         DB::statement('CREATE INDEX posts_searchable_index ON pages USING GIN (searchable)');
 

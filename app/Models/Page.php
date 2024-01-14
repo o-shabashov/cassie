@@ -36,7 +36,7 @@ class Page extends Model
     }
 
     /**
-     * The Typesense schema to be created.
+     * Typesense schema to be created
      */
     public function getCollectionSchema(): array
     {
@@ -65,7 +65,7 @@ class Page extends Model
     }
 
     /**
-     * The fields to be queried against
+     * Typesense The fields to be queried against
      * @see https://typesense.org/docs/0.25.0/api/search.html
      */
     public function typesenseQueryBy(): array
