@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.5 (Debian 15.5-1.pgdg120+1)
--- Dumped by pg_dump version 15.5 (Ubuntu 15.5-1.pgdg22.04+1)
+-- Dumped from database version 15.6 (Debian 15.6-1.pgdg120+2)
+-- Dumped by pg_dump version 15.6 (Ubuntu 15.6-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -96,8 +96,7 @@ CREATE TABLE public.pages (
     url character varying(255) NOT NULL,
     deleted_at timestamp(0) without time zone,
     created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone,
-    searchable tsvector
+    updated_at timestamp(0) without time zone
 );
 
 
@@ -318,13 +317,6 @@ CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_index ON public.
 
 
 --
--- Name: posts_searchable_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX posts_searchable_index ON public.pages USING gist (searchable);
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -332,8 +324,8 @@ CREATE INDEX posts_searchable_index ON public.pages USING gist (searchable);
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.5 (Debian 15.5-1.pgdg120+1)
--- Dumped by pg_dump version 15.5 (Ubuntu 15.5-1.pgdg22.04+1)
+-- Dumped from database version 15.6 (Debian 15.6-1.pgdg120+2)
+-- Dumped by pg_dump version 15.6 (Ubuntu 15.6-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -355,7 +347,7 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 2	2014_10_12_100000_create_password_reset_tokens_table	1
 3	2019_08_19_000000_create_failed_jobs_table	1
 4	2019_12_14_000001_create_personal_access_tokens_table	1
-8	2024_01_03_114921_create_pages_table	2
+9	2024_01_03_114921_create_pages_table	2
 \.
 
 
@@ -363,7 +355,7 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.migrations_id_seq', 8, true);
+SELECT pg_catalog.setval('public.migrations_id_seq', 9, true);
 
 
 --

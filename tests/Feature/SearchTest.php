@@ -34,6 +34,19 @@ class SearchTest extends TestCase
 //        $this->assertEquals('dart', Page::search('il')->get()->first()->title);
     }
 
+    public function testSubstringIsSearchable(): void
+    {
+        Page::factory()->create([
+            'title' => 'anakin',
+            'sections' => ['find me rabbit', 'should you tiger'],
+        ]);
+
+        $searchResult = Page::search('abbi')->get();
+
+        $this->assertCount(1, $searchResult);
+        $this->assertEquals('anakin', $searchResult->first()->title);
+    }
+
 //    public function testTitleHasPriorityOverSections(): void
 //    {
 //        Page::factory()->create([

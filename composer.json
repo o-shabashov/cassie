@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "devnoiseconsulting/laravel-scout-postgres-tsvector": "^9.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/pail": "^1.0",
