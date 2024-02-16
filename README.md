@@ -1,3 +1,14 @@
+# Install
+
+```shell
+cp .env.example .env
+composer i
+./vendor/bin/sail up -d
+./vendor/bin/sail artisan db:seed
+./vendor/bin/sail queue:listen
+```
+
+
 # Roadmap
 
 * [ ] Импорт данных
@@ -9,7 +20,6 @@
 
 # Drivers
 
-* Plain Postgres with GIN or GIST tsvector index
 * Typesense
 * Meilisearch
 * Elastic
