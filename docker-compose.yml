@@ -83,14 +83,14 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
-    selenium:
-        image: seleniarm/standalone-chromium
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-        volumes:
-            - '/dev/shm:/dev/shm'
-        networks:
-            - sail
+#    selenium:
+#        image: seleniarm/standalone-chromium
+#        extra_hosts:
+#            - 'host.docker.internal:host-gateway'
+#        volumes:
+#            - '/dev/shm:/dev/shm'
+#        networks:
+#            - sail
     minio:
         image: 'minio/minio:latest'
         ports:
@@ -119,7 +119,7 @@ services:
             - '8108:8108'
         volumes:
             - 'sail-typesense:/data'
-        command: '--data-dir /data --api-key=typesense --enable-cors'
+        command: '--data-dir /data --api-key={$TYPESENSE_API_KEY} --enable-cors'
         networks:
             - sail
         healthcheck:

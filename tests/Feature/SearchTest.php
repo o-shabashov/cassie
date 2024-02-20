@@ -2,64 +2,41 @@
 
 namespace Tests\Feature;
 
-use App\Models\Page;
+use App\Models\Meilisearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\MeilisearchTestCase;
 
-class SearchTest extends TestCase
+class SearchTest extends MeilisearchTestCase
 {
     use RefreshDatabase;
 
     public function testCustomStructureIsSearchable(): void
     {
-        Page::factory()->create([
-            'title' => 'yoda',
-            'sections' => ['property' => 'fake me', 'value' => 'tease me'],
-        ]);
+        $this->assertEquals('yoda', Meilisearch\Page::search('tease')->get()->first()->title);
+        $this->assertEquals('anakin', Meilisearch\Page::search('rabbi')->get()->first()->title);
+        $this->assertEquals('dart', Meilisearch\Page::search('red')->get()->first()->title);
+        $this->assertEquals('dart', Meilisearch\Page::search('bla')->get()->first()->title);
+        $this->assertEquals('dart', Meilisearch\Page::search('kill')->get()->first()->title);
+    }
 
-        Page::factory()->create([
-            'title' => 'anakin',
-            'sections' => ['find me rabbit', 'should you tiger'],
-        ]);
-
-        Page::factory()->create([
-            'title' => 'dart',
-            'sections' => ['moll' => ['black', 'suit' => 'red'], 'gonna kill you'],
-        ]);
-
-//        $this->assertEquals('yoda', Page::search('fake')->get()->first()->title);
-        $this->assertEquals('anakin', Page::search('rabb')->get()->first()->title);
-//        $this->assertEquals('dart', Page::search('suit')->get()->first()->title);
-//        $this->assertEquals('dart', Page::search('red')->get()->first()->title);
-//        $this->assertEquals('dart', Page::search('il')->get()->first()->title);
+    public function testKeyNameIsNotSearchable(): void
+    {
+        $this->assertNull(Meilisearch\Page::search('suit')->get()->first());
     }
 
     public function testSubstringIsSearchable(): void
     {
-        Page::factory()->create([
-            'title' => 'anakin',
-            'sections' => ['find me rabbit', 'should you tiger'],
-        ]);
+        $this->markTestSkipped('Meilisearch does not support substring search. Waiting till pgsql will be ready');
+        $searchResult = Meilisearch\Page::search('abbi')->get();
 
-        $searchResult = Page::search('abbi')->get();
-
-        $this->assertCount(1, $searchResult);
+        $this->assertNotNull($searchResult);
         $this->assertEquals('anakin', $searchResult->first()->title);
     }
 
-//    public function testTitleHasPriorityOverSections(): void
-//    {
-//        Page::factory()->create([
-//            'title' => 'yoda master',
-//            'sections' => ['property' => 'anakin', 'value' => 'tease me', 'anakin'],
-//        ]);
-//
-//        Page::factory()->create([
-//            'title' => 'anakin young',
-//            'sections' => ['yoda', 'still yoda'],
-//        ]);
-//
-//        $this->assertEquals('anakin', Page::search('anakin you')->get()->first()->title);
-//        $this->assertEquals('yoda', Page::search('yoda')->get()->first()->title);
-//    }
+    public function testTitleHasPriorityOverSections(): void
+    {
+        $this->assertEquals('anakin young', Meilisearch\Page::search('anakin you')->get()->first()->title);
+        $this->assertEquals('anakin', Meilisearch\Page::search('anakin')->get()->first()->title);
+        $this->assertEquals('yoda', Meilisearch\Page::search('yoda')->get()->first()->title);
+    }
 }

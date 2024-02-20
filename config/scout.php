@@ -116,7 +116,7 @@ return [
     ],
 
     'typesense' => [
-        'api_key'         => 'typesense',
+        'api_key'         => env('TYPESENSE_API_KEY', 'xyz'),
         'nodes'           => [
             [
                 'host'     => 'typesense',
@@ -135,5 +135,20 @@ return [
         'healthcheck_interval_seconds' => 30,
         'num_retries'                  => 3,
         'retry_interval_seconds'       => 1,
+    ],
+
+    'meilisearch' => [
+        'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+        'key' => env('MEILISEARCH_KEY'),
+
+        /**
+         * @see https://www.meilisearch.com/docs/reference/api/settings
+         */
+        'index-settings' => [
+            \App\Models\Meilisearch\Page::class => [
+                'filterableAttributes'=> ['id', 'title', 'url', 'sections'],
+                'sortableAttributes' => ['created_at'],
+            ],
+        ],
     ],
 ];
