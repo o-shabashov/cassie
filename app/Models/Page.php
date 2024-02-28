@@ -8,15 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
-    use SoftDeletes, HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
         'url',
         'sections',
     ];
+
     protected $casts = [
         'sections' => 'array',
     ];
+
     protected $hidden;
 }

@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\Models\Page;
 use App\Models\Meilisearch;
+use App\Models\Page;
 
 abstract class MeilisearchTestCase extends TestCase
 {
@@ -31,7 +31,7 @@ abstract class MeilisearchTestCase extends TestCase
             [
                 'title'    => 'anakin young',
                 'sections' => ['yoda', 'still yoda'],
-            ]
+            ],
         ]);
 
         Meilisearch\Page::all()->searchable();

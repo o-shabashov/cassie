@@ -24,8 +24,8 @@ class Page extends \App\Models\Page implements TypesenseDocument
     public function getCollectionSchema(): array
     {
         return [
-            'name'                  => $this->searchableAs(),
-            'fields'                => [
+            'name'   => $this->searchableAs(),
+            'fields' => [
                 [
                     'name' => 'id',
                     'type' => 'string',

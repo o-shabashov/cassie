@@ -10,7 +10,7 @@ class PageRequest extends FormRequest
     {
         return [
             'title'    => ['required'],
-            'url'    => ['required'],
+            'url'      => ['required'],
             'sections' => ['required'],
         ];
     }

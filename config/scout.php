@@ -68,7 +68,7 @@ return [
     */
 
     'chunk' => [
-        'searchable' => 500,
+        'searchable'   => 500,
         'unsearchable' => 500,
     ],
 
@@ -112,12 +112,12 @@ return [
         // You may set the default querying method
         // Possible values: plainquery, phrasequery, tsquery
         // plainquery is used if this option is omitted.
-//        'search_using' => 'tsquery'
+        //        'search_using' => 'tsquery'
     ],
 
     'typesense' => [
-        'api_key'         => env('TYPESENSE_API_KEY', 'xyz'),
-        'nodes'           => [
+        'api_key' => env('TYPESENSE_API_KEY', 'xyz'),
+        'nodes'   => [
             [
                 'host'     => 'typesense',
                 'port'     => '8108',
@@ -125,7 +125,7 @@ return [
                 'protocol' => 'http',
             ],
         ],
-        'nearest_node'    => [
+        'nearest_node' => [
             'host'     => 'typesense',
             'port'     => '8108',
             'path'     => '',
@@ -139,15 +139,15 @@ return [
 
     'meilisearch' => [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
-        'key' => env('MEILISEARCH_KEY'),
+        'key'  => env('MEILISEARCH_KEY'),
 
         /**
          * @see https://www.meilisearch.com/docs/reference/api/settings
          */
         'index-settings' => [
             \App\Models\Meilisearch\Page::class => [
-                'filterableAttributes'=> ['id', 'title', 'url', 'sections'],
-                'sortableAttributes' => ['created_at'],
+                'filterableAttributes' => ['id', 'title', 'url', 'sections'],
+                'sortableAttributes'   => ['created_at'],
             ],
         ],
     ],
