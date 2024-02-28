@@ -14,4 +14,15 @@ class Page extends \App\Models\Page
     {
         return app(EngineManager::class)->engine('meilisearch');
     }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id'         => $this->id,
+            'title'      => $this->title,
+            'url'        => $this->url,
+            'sections'   => $this->sections,
+            'created_at' => $this->created_at,
+        ];
+    }
 }
