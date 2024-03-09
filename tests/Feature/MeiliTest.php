@@ -6,7 +6,7 @@ use App\Models\Meilisearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\MeilisearchTestCase;
 
-class SearchTest extends MeilisearchTestCase
+class MeiliTest extends MeilisearchTestCase
 {
     use RefreshDatabase;
 
