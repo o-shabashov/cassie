@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('url');
             $table->softDeletes();
             $table->timestamps();
+
+//            DB::statement("ALTER TABLE pages ADD searchable tsvector generated always as( jsonb_to_tsvector('english', sections, '[\"string\"]') ) stored");
         });
     }
 
