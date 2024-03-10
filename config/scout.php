@@ -100,21 +100,6 @@ return [
 
     'identify' => env('SCOUT_IDENTIFY', false),
 
-    'pgsql' => [
-        // Connection to use. See config/database.php
-        'connection' => env('DB_CONNECTION', 'pgsql'),
-        // You may want to update index documents directly in PostgreSQL (i.e. via triggers).
-        // In this case you can set this value to false.
-        'maintain_index' => true,
-        // You can explicitly specify what PostgreSQL text search config to use by scout.
-        // Use \dF in psql to see all available configurations in your database.
-        'config' => 'english',
-        // You may set the default querying method
-        // Possible values: plainquery, phrasequery, tsquery
-        // plainquery is used if this option is omitted.
-        //        'search_using' => 'tsquery'
-    ],
-
     'typesense' => [
         'api_key' => env('TYPESENSE_API_KEY', 'xyz'),
         'nodes'   => [
@@ -145,7 +130,7 @@ return [
          * @see https://www.meilisearch.com/docs/reference/api/settings
          */
         'index-settings' => [
-            \App\Models\Meilisearch\Page::class => [
+            \App\Models\Meilisearch\MeilisearchPage::class => [
                 'filterableAttributes' => ['id', 'title', 'url', 'sections'],
                 'sortableAttributes'   => ['created_at'],
             ],
