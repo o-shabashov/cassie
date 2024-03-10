@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\Models\Meilisearch;
+use App\Models\Meilisearch\MeilisearchPage;
 use App\Models\Page;
 
 abstract class MeilisearchTestCase extends TestCase
@@ -34,13 +34,13 @@ abstract class MeilisearchTestCase extends TestCase
             ],
         ]);
 
-        Meilisearch\Page::all()->searchable();
+        MeilisearchPage::all()->searchable();
         sleep(1);
     }
 
     protected function tearDown(): void
     {
-        $this->artisan('scout:flush', ['model' => Meilisearch\Page::class]);
+        $this->artisan('scout:flush', ['model' => MeilisearchPage::class]);
 
         parent::tearDown();
     }

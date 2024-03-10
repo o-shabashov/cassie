@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\Models\Pgsql;
 use App\Models\Page;
+use App\Models\Pgsql\PgsqlPage;
 
 abstract class PgsqlTestCase extends TestCase
 {
@@ -34,7 +34,7 @@ abstract class PgsqlTestCase extends TestCase
             ],
         ]);
 
-        Pgsql\Page::all()->searchable();
+        PgsqlPage::all()->searchable();
     }
 
     protected function tearDown(): void

@@ -2,11 +2,12 @@
 
 namespace App\Models\Typesense;
 
+use App\Models\Page;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
 use Typesense\LaravelTypesense\Interfaces\TypesenseDocument;
 
-class Page extends \App\Models\Page implements TypesenseDocument
+class TypesensePage extends Page implements TypesenseDocument
 {
     use Searchable;
 

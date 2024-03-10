@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Pgsql\PgsqlPage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\PgsqlTestCase;
-use App\Models\Pgsql;
 
 class PgsqlTest extends PgsqlTestCase
 {
@@ -12,21 +12,21 @@ class PgsqlTest extends PgsqlTestCase
 
     public function testCustomStructureIsSearchable(): void
     {
-        $this->assertEquals('yoda', Pgsql\Page::search('tease')->usingPlainQuery()->get()->first()->title);
-        $this->assertEquals('anakin', Pgsql\Page::search('rabbi')->get()->first()->title);
-        $this->assertEquals('dart', Pgsql\Page::search('red')->get()->first()->title);
-        $this->assertEquals('dart', Pgsql\Page::search('bla')->get()->first()->title);
-        $this->assertEquals('dart', Pgsql\Page::search('kill')->get()->first()->title);
+        $this->assertEquals('yoda', PgsqlPage::search('tease')->get()->first()->title);
+        $this->assertEquals('anakin', PgsqlPage::search('rabbi')->get()->first()->title);
+        $this->assertEquals('dart', PgsqlPage::search('red')->get()->first()->title);
+        $this->assertEquals('dart', PgsqlPage::search('bla')->get()->first()->title);
+        $this->assertEquals('dart', PgsqlPage::search('kill')->get()->first()->title);
     }
 
     public function testKeyNameIsNotSearchable(): void
     {
-        $this->assertNull(Pgsql\Page::search('suit')->get()->first());
+        $this->assertNull(PgsqlPage::search('suit')->get()->first());
     }
 
     public function testSubstringIsSearchable(): void
     {
-        $searchResult = Pgsql\Page::search('abbi')->get();
+        $searchResult = PgsqlPage::search('abbi')->get();
 
         $this->assertNotNull($searchResult);
         $this->assertEquals('anakin', $searchResult->first()->title);
@@ -34,8 +34,8 @@ class PgsqlTest extends PgsqlTestCase
 
     public function testTitleHasPriorityOverSections(): void
     {
-        $this->assertEquals('anakin young', Pgsql\Page::search('anakin you')->get()->first()->title);
-        $this->assertEquals('anakin', Pgsql\Page::search('anakin')->get()->first()->title);
-        $this->assertEquals('yoda', Pgsql\Page::search('yoda')->get()->first()->title);
+        $this->assertEquals('anakin young', PgsqlPage::search('anakin you')->get()->first()->title);
+        $this->assertEquals('anakin', PgsqlPage::search('anakin')->get()->first()->title);
+        $this->assertEquals('yoda', PgsqlPage::search('yoda')->get()->first()->title);
     }
 }
