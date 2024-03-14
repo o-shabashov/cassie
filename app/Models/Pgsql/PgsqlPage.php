@@ -8,8 +8,6 @@ use Illuminate\Support\Str;
 
 class PgsqlPage extends Page
 {
-    protected $table = 'pages';
-
     public static function search($query = ''): Builder
     {
         $operator = 'to_tsquery';
