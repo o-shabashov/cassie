@@ -3,7 +3,6 @@
 namespace Tests;
 
 use App\Models\Page;
-use App\Models\Pgsql\PgsqlPage;
 
 abstract class PgsqlTestCase extends TestCase
 {
@@ -34,13 +33,5 @@ abstract class PgsqlTestCase extends TestCase
             ],
         ]);
 
-        PgsqlPage::all()->searchable();
-    }
-
-    protected function tearDown(): void
-    {
-//        $this->artisan('scout:flush', ['model' => Pgsql\Page::class]);
-
-        parent::tearDown();
     }
 }

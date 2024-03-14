@@ -3,32 +3,25 @@
 namespace App\Models\Pgsql;
 
 use App\Models\Page;
-use Laravel\Scout\Attributes\SearchUsingFullText;
-use Laravel\Scout\Attributes\SearchUsingPrefix;
-use Laravel\Scout\EngineManager;
-use Laravel\Scout\Engines\Engine;
-use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class PgsqlPage extends Page
 {
-    use Searchable;
-
     protected $table = 'pages';
 
-    public function searchableUsing(): Engine
+    public static function search($query = ''): Builder
     {
-        return app(EngineManager::class)->engine('database');
-    }
+        $operator = 'to_tsquery';
+        if (Str::contains($query, ' ')) {
+            $operator = 'phraseto_tsquery';
+        }
 
-    #[SearchUsingPrefix(['id', 'title', 'url'])]
-    #[SearchUsingFullText(['sections'])]
-    public function toSearchableArray(): array
-    {
-        return [
-            'id'         => $this->id,
-            'title'      => $this->title,
-            'url'        => $this->url,
-            'sections'   => $this->sections,
-        ];
+        /**
+         * PHPStorm is going crazy - thought it's will be Page model
+         * @noinspection PhpIncompatibleReturnTypeInspection
+         */
+        return Page::whereRaw("title % '$query'")
+                   ->orWhereRaw("searchable @@ $operator('english', '$query:*')");
     }
 }
