@@ -17,7 +17,7 @@ class Page extends \App\Models\Page implements TypesenseDocument
             'title'      => $this->title,
             'url'        => $this->url,
             'sections'   => implode(' ', Arr::flatten($this->sections)),
-            'created_at' => $this->created_at->timestamp,
+            'created_at' => $this->created_at,
         ];
     }
 
@@ -32,6 +32,10 @@ class Page extends \App\Models\Page implements TypesenseDocument
                 ],
                 [
                     'name' => 'title',
+                    'type' => 'string',
+                ],
+                [
+                    'name' => 'url',
                     'type' => 'string',
                 ],
                 [
