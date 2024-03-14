@@ -2,12 +2,11 @@
 
 namespace App\Models\Meilisearch;
 
-use App\Models\Page;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
 
-class MeilisearchPage extends Page
+class Page extends \App\Models\Page
 {
     use Searchable;
 

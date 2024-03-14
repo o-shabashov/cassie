@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Meilisearch\MeilisearchPage;
+use App\Models\Meilisearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\MeilisearchTestCase;
 
@@ -12,31 +12,38 @@ class MeilisearchTest extends MeilisearchTestCase
 
     public function testCustomStructureIsSearchable(): void
     {
-        $this->assertEquals('yoda', MeilisearchPage::search('tease')->get()->first()->title);
-        $this->assertEquals('anakin', MeilisearchPage::search('rabbi')->get()->first()->title);
-        $this->assertEquals('dart', MeilisearchPage::search('red')->get()->first()->title);
-        $this->assertEquals('dart', MeilisearchPage::search('bla')->get()->first()->title);
-        $this->assertEquals('dart', MeilisearchPage::search('kill')->get()->first()->title);
+        $this->assertEquals('yoda', Meilisearch\Page::search('tease')->get()->first()->title);
+        $this->assertEquals('anakin', Meilisearch\Page::search('rabbi')->get()->first()->title);
+        $this->assertEquals('dart', Meilisearch\Page::search('red')->get()->first()->title);
+        $this->assertEquals('dart', Meilisearch\Page::search('bla')->get()->first()->title);
+        $this->assertEquals('dart', Meilisearch\Page::search('kill')->get()->first()->title);
     }
 
     public function testKeyNameIsNotSearchable(): void
     {
-        $this->assertNull(MeilisearchPage::search('suit')->get()->first());
+        $this->assertNull(Meilisearch\Page::search('suit')->get()->first());
     }
 
     public function testSubstringIsSearchable(): void
     {
-        $this->markTestSkipped('Meilisearch does not support substring search. Waiting till pgsql will be ready');
-        $searchResult = MeilisearchPage::search('abbi')->get();
+        $searchResult = Meilisearch\Page::search('rabb')->get();
 
         $this->assertNotNull($searchResult);
         $this->assertEquals('anakin', $searchResult->first()->title);
     }
 
+    public function testSubstringInTitleIsSearchable(): void
+    {
+        $searchResult = Meilisearch\Page::search('dar')->get();
+
+        $this->assertNotNull($searchResult);
+        $this->assertEquals('dart', $searchResult->first()->title);
+    }
+
     public function testTitleHasPriorityOverSections(): void
     {
-        $this->assertEquals('anakin young', MeilisearchPage::search('anakin you')->get()->first()->title);
-        $this->assertEquals('anakin', MeilisearchPage::search('anakin')->get()->first()->title);
-        $this->assertEquals('yoda', MeilisearchPage::search('yoda')->get()->first()->title);
+        $this->assertEquals('anakin young', Meilisearch\Page::search('anakin you')->get()->first()->title);
+        $this->assertEquals('anakin', Meilisearch\Page::search('anakin')->get()->first()->title);
+        $this->assertEquals('yoda', Meilisearch\Page::search('yoda')->get()->first()->title);
     }
 }

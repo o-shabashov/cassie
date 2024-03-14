@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\Models\Meilisearch\MeilisearchPage;
-use App\Models\Page;
+use App\Models\Meilisearch;
+use App\Models;
 
 abstract class MeilisearchTestCase extends TestCase
 {
@@ -11,7 +11,7 @@ abstract class MeilisearchTestCase extends TestCase
     {
         parent::setUp();
 
-        Page::factory()->createMany([
+        Models\Page::factory()->createMany([
             [
                 'title'    => 'yoda',
                 'sections' => ['property' => 'fake me', 'value' => 'tease me'],
@@ -34,13 +34,13 @@ abstract class MeilisearchTestCase extends TestCase
             ],
         ]);
 
-        MeilisearchPage::all()->searchable();
+        Meilisearch\Page::all()->searchable();
         sleep(1);
     }
 
     protected function tearDown(): void
     {
-        $this->artisan('scout:flush', ['model' => MeilisearchPage::class]);
+        $this->artisan('scout:flush', ['model' => Meilisearch\Page::class]);
 
         parent::tearDown();
     }
