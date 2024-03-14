@@ -3,6 +3,8 @@
 namespace App\Models\Typesense;
 
 use Illuminate\Support\Arr;
+use Laravel\Scout\EngineManager;
+use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
 use Typesense\LaravelTypesense\Interfaces\TypesenseDocument;
 
@@ -10,14 +12,19 @@ class Page extends \App\Models\Page implements TypesenseDocument
 {
     use Searchable;
 
+    public function searchableUsing(): Engine
+    {
+        return app(EngineManager::class)->engine('typesense');
+    }
     public function toSearchableArray(): array
     {
         return [
             'id'         => (string) $this->id,
             'title'      => $this->title,
             'url'        => $this->url,
+            // FIXME For some reasons typesense does not accept an array, duh! Even if set 'auto' in the collection. So we will loose all keys here
             'sections'   => implode(' ', Arr::flatten($this->sections)),
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->timestamp,
         ];
     }
 

@@ -16,7 +16,7 @@ abstract class FeatureTestCase extends BaseTestCase
         Models\Page::factory()->createMany([
             [
                 'title'    => 'yoda',
-                'sections' => ['property' => 'fake me', 'value' => 'tease me'],
+                'sections' => ['property' => 'fake me', 'value' => 'tease'],
             ],
             [
                 'title'    => 'anakin',
@@ -28,7 +28,7 @@ abstract class FeatureTestCase extends BaseTestCase
             ],
             [
                 'title'    => 'yoda master',
-                'sections' => ['property' => 'anakin', 'value' => 'tease me', 'anakin'],
+                'sections' => ['property' => 'anakin', 'value' => 'touch me', 'anakin'],
             ],
             [
                 'title'    => 'anakin young',
