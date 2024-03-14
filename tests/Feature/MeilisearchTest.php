@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Meilisearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\MeilisearchTestCase;
+use Tests\MeilisearchFeatureTestCase;
 
-class MeilisearchTest extends MeilisearchTestCase
+class MeilisearchTest extends MeilisearchFeatureTestCase
 {
     use RefreshDatabase;
 

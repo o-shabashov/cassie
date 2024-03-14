@@ -4,9 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\Pgsql\PgsqlPage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\PgsqlTestCase;
+use Tests\FeatureTestCase;
+use Tests\PgsqlFeatureTestCase;
 
-class PgsqlTest extends PgsqlTestCase
+class PgsqlTest extends FeatureTestCase
 {
     use RefreshDatabase;
 

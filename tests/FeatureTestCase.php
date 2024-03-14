@@ -2,15 +2,18 @@
 
 namespace Tests;
 
-use App\Models\Page;
+use App\Models;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-abstract class PgsqlTestCase extends TestCase
+abstract class FeatureTestCase extends BaseTestCase
 {
+    use CreatesApplication;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        Page::factory()->createMany([
+        Models\Page::factory()->createMany([
             [
                 'title'    => 'yoda',
                 'sections' => ['property' => 'fake me', 'value' => 'tease me'],
@@ -32,6 +35,6 @@ abstract class PgsqlTestCase extends TestCase
                 'sections' => ['yoda', 'still yoda'],
             ],
         ]);
-
     }
+
 }
