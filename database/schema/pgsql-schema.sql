@@ -16,6 +16,20 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -96,7 +110,8 @@ CREATE TABLE public.pages (
     url character varying(255) NOT NULL,
     deleted_at timestamp(0) without time zone,
     created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone
+    updated_at timestamp(0) without time zone,
+    searchable tsvector GENERATED ALWAYS AS (jsonb_to_tsvector('english'::regconfig, sections, '["all"]'::jsonb)) STORED
 );
 
 
@@ -317,6 +332,20 @@ CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_index ON public.
 
 
 --
+-- Name: posts_searchable_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX posts_searchable_index ON public.pages USING gin (searchable);
+
+
+--
+-- Name: titles_trgm_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX titles_trgm_index ON public.pages USING gin (title public.gin_trgm_ops);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -347,7 +376,7 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 2	2014_10_12_100000_create_password_reset_tokens_table	1
 3	2019_08_19_000000_create_failed_jobs_table	1
 4	2019_12_14_000001_create_personal_access_tokens_table	1
-9	2024_01_03_114921_create_pages_table	2
+5	2024_01_03_114921_create_pages_table	1
 \.
 
 
@@ -355,7 +384,7 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.migrations_id_seq', 9, true);
+SELECT pg_catalog.setval('public.migrations_id_seq', 5, true);
 
 
 --
