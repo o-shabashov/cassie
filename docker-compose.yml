@@ -119,7 +119,7 @@ services:
             - '8108:8108'
         volumes:
             - 'sail-typesense:/data'
-        command: '--data-dir /data --api-key={$TYPESENSE_API_KEY} --enable-cors'
+        command: '--data-dir /data --api-key=typesense --enable-cors'
         networks:
             - sail
         healthcheck:
