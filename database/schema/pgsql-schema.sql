@@ -335,7 +335,7 @@ CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_index ON public.
 -- Name: posts_searchable_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX posts_searchable_index ON public.pages USING gin (searchable);
+CREATE INDEX pages_searchable_index ON public.pages USING gin (searchable);
 
 
 --
@@ -390,4 +390,3 @@ SELECT pg_catalog.setval('public.migrations_id_seq', 5, true);
 --
 -- PostgreSQL database dump complete
 --
-
