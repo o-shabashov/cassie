@@ -22,8 +22,8 @@ composer i
 * Postgres by gin and extension pg_trgm
 * Typesense
 * Meilisearch
-* Elastic
-* Manged Elastic indexes by Postgres - Zombodb
+* ? Elastic
+* ? Manged Elastic indexes by Postgres - Zombodb
 
 # Метрики
 
