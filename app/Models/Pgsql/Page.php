@@ -14,11 +14,7 @@ class Page extends \App\Models\Page
             $operator = 'phraseto_tsquery';
         }
 
-        /**
-         * PHPStorm is going crazy - thought it's will be Page model
-         * @noinspection PhpIncompatibleReturnTypeInspection
-         */
-        return Page::whereRaw("title % '$query'")
+        return self::query()->whereRaw("title % '$query'")
                    ->orWhereRaw("searchable @@ $operator('english', '$query:*')");
     }
 }
