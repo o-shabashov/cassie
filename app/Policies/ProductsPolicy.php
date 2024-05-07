@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Products;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -15,7 +15,7 @@ class ProductsPolicy
 
     }
 
-    public function view(User $user, Products $products): bool
+    public function view(User $user, Product $products): bool
     {
     }
 
@@ -23,19 +23,19 @@ class ProductsPolicy
     {
     }
 
-    public function update(User $user, Products $products): bool
+    public function update(User $user, Product $products): bool
     {
     }
 
-    public function delete(User $user, Products $products): bool
+    public function delete(User $user, Product $products): bool
     {
     }
 
-    public function restore(User $user, Products $products): bool
+    public function restore(User $user, Product $products): bool
     {
     }
 
-    public function forceDelete(User $user, Products $products): bool
+    public function forceDelete(User $user, Product $products): bool
     {
     }
 }

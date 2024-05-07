@@ -4,32 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductsRequest;
 use App\Http\Resources\ProductsResource;
-use App\Models\Products;
+use App\Models\Product;
 
 class ProductsController extends Controller
 {
     public function index()
     {
-        $this->authorize('viewAny', Products::class);
+        $this->authorize('viewAny', Product::class);
 
-        return ProductsResource::collection(Products::all());
+        return ProductsResource::collection(Product::all());
     }
 
     public function store(ProductsRequest $request)
     {
-        $this->authorize('create', Products::class);
+        $this->authorize('create', Product::class);
 
-        return new ProductsResource(Products::create($request->validated()));
+        return new ProductsResource(Product::create($request->validated()));
     }
 
-    public function show(Products $products)
+    public function show(Product $products)
     {
         $this->authorize('view', $products);
 
         return new ProductsResource($products);
     }
 
-    public function update(ProductsRequest $request, Products $products)
+    public function update(ProductsRequest $request, Product $products)
     {
         $this->authorize('update', $products);
 
@@ -38,7 +38,7 @@ class ProductsController extends Controller
         return new ProductsResource($products);
     }
 
-    public function destroy(Products $products)
+    public function destroy(Product $products)
     {
         $this->authorize('delete', $products);
 
