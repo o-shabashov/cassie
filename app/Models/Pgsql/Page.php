@@ -2,11 +2,10 @@
 
 namespace App\Models\Pgsql;
 
-use App\Models\Page;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class PgsqlPage extends Page
+class Page extends \App\Models\Page
 {
     public static function search($query = ''): Builder
     {
