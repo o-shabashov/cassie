@@ -16,7 +16,7 @@ class ProductsFactory extends Factory
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'title'      => $this->faker->word(),
-            'fields'     => $this->faker->words(),
+            'fields'     => [$this->faker->words()],
             'url'        => $this->faker->url(),
         ];
     }
