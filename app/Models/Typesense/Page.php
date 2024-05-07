@@ -53,6 +53,11 @@ class Page extends \App\Models\Page implements TypesenseDocument
                     'name' => 'created_at',
                     'type' => 'int64',
                 ],
+                [
+                    'name' => '__soft_deleted',
+                    'type' => 'int32',
+                    'optional' => true
+                ],
             ],
             'default_sorting_field' => 'created_at',
         ];
