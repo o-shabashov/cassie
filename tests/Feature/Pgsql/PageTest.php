@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Pgsql;
 
 use App\Models\Pgsql;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
 
-class PgsqlTest extends FeatureTestCase
+class PageTest extends FeatureTestCase
 {
     use RefreshDatabase;
 

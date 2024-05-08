@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Typesense;
 
 use App\Models\Typesense;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TypesenseFeatureTestCase;
 
-class TypesenseTest extends TypesenseFeatureTestCase
+class PageTest extends TypesenseFeatureTestCase
 {
     use RefreshDatabase;
 

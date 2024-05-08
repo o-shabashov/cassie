@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Meilisearch;
 
 use App\Models\Meilisearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\MeilisearchFeatureTestCase;
 
-class MeilisearchTest extends MeilisearchFeatureTestCase
+class PageTest extends MeilisearchFeatureTestCase
 {
     use RefreshDatabase;
 
