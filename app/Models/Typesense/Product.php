@@ -33,6 +33,7 @@ class Product extends \App\Models\Product implements TypesenseDocument
     {
         return [
             'name'                  => $this->searchableAs(),
+            'enable_nested_fields'  => true,
             'fields'                => [
                 [
                     'name' => '.*',
