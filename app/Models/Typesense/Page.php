@@ -22,7 +22,6 @@ class Page extends \App\Models\Page implements TypesenseDocument
             'id'         => (string) $this->id,
             'title'      => $this->title,
             'url'        => $this->url,
-            // FIXME For some reasons typesense does not accept an array, duh! Even if set 'auto' in the collection. So we will loose all keys here
             'sections'   => implode(' ', Arr::flatten($this->sections)),
             'created_at' => $this->created_at->timestamp,
         ];
@@ -33,10 +32,6 @@ class Page extends \App\Models\Page implements TypesenseDocument
         return [
             'name'   => $this->searchableAs(),
             'fields' => [
-                [
-                    'name' => 'id',
-                    'type' => 'string',
-                ],
                 [
                     'name' => 'title',
                     'type' => 'string',
