@@ -11,6 +11,8 @@ class Product extends \App\Models\Product implements TypesenseDocument
 {
     use Searchable;
 
+    protected $casts = [];
+
     public function searchableUsing(): Engine
     {
         return app(EngineManager::class)->engine('typesense');
@@ -22,8 +24,6 @@ class Product extends \App\Models\Product implements TypesenseDocument
             'id'         => (string) $this->id,
             'title'      => $this->title,
             'url'        => $this->url,
-            // FIXME For some reasons typesense does not accept an array, duh! Even if set 'auto' in the collection. So we will loose all keys here
-            // 'fields'   => implode(' ', Arr::flatten($this->fields)),
             'fields'     => $this->fields,
             'created_at' => $this->created_at->timestamp,
         ];
@@ -33,11 +33,21 @@ class Product extends \App\Models\Product implements TypesenseDocument
     {
         return [
             'name'                  => $this->searchableAs(),
-            'enable_nested_fields'  => true,
+            // 'enable_nested_fields'  => true,
+            'default_sorting_field' => 'created_at',
+            // 'token_separators'      => [':', '/', '.'],
             'fields'                => [
+                // [
+                //     'name' => '.*',
+                //     'type' => 'auto',
+                // ],
                 [
-                    'name' => '.*',
-                    'type' => 'auto',
+                    'name' => 'title',
+                    'type' => 'string',
+                ],
+                [
+                    'name' => 'fields',
+                    'type' => 'object',
                 ],
                 [
                     'name'  => '.*_facet',
@@ -45,10 +55,8 @@ class Product extends \App\Models\Product implements TypesenseDocument
                     'facet' => true,
                 ],
                 [
-                    'name'     => 'url',
-                    'type'     => 'auto',
-                    'index'    => false,
-                    'optional' => true,
+                    'name' => 'url',
+                    'type' => 'string',
                 ],
                 [
                     'name' => 'created_at',
@@ -60,7 +68,6 @@ class Product extends \App\Models\Product implements TypesenseDocument
                     'optional' => true,
                 ],
             ],
-            'default_sorting_field' => 'created_at',
         ];
     }
 
