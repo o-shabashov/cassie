@@ -3,13 +3,10 @@
 namespace Tests\Feature\Typesense;
 
 use App\Models\Typesense;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TypesenseFeatureTestCase;
 
 class PageTest extends TypesenseFeatureTestCase
 {
-    use RefreshDatabase;
-
     public function testCustomStructureIsSearchable(): void
     {
         $this->assertEquals('yoda', Typesense\Page::search('tease')->get()->first()->title);

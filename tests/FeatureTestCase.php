@@ -3,11 +3,13 @@
 namespace Tests;
 
 use App\Models;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class FeatureTestCase extends BaseTestCase
 {
     use CreatesApplication;
+    use DatabaseTransactions;
 
     protected function setUp(): void
     {

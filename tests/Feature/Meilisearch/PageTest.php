@@ -3,13 +3,10 @@
 namespace Tests\Feature\Meilisearch;
 
 use App\Models\Meilisearch;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\MeilisearchFeatureTestCase;
 
 class PageTest extends MeilisearchFeatureTestCase
 {
-    use RefreshDatabase;
-
     public function testCustomStructureIsSearchable(): void
     {
         $this->assertEquals('yoda', Meilisearch\Page::search('tease')->get()->first()->title);

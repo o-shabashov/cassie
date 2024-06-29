@@ -3,13 +3,10 @@
 namespace Tests\Feature\Pgsql;
 
 use App\Models\Pgsql;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
 
 class PageTest extends FeatureTestCase
 {
-    use RefreshDatabase;
-
     public function testCustomStructureIsSearchable(): void
     {
         $this->assertEquals('yoda', Pgsql\Page::search('tease')->get()->first()->title);
