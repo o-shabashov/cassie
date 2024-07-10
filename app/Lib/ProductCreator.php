@@ -48,7 +48,7 @@ class ProductCreator
     private static function randomTitle()
     {
         $adjective = self::ADJECTIVES[mt_rand(0, count(self::ADJECTIVES) - 1)];
-        $noun = self::NOUNS[mt_rand(0, count(self::NOUNS) - 1)];
+        $noun      = self::NOUNS[mt_rand(0, count(self::NOUNS) - 1)];
 
         return "$adjective $noun";
     }

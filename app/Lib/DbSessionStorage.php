@@ -58,22 +58,22 @@ class DbSessionStorage implements SessionStorage
         if (! $dbSession) {
             $dbSession = new \App\Models\Session();
         }
-        $dbSession->session_id = $session->getId();
-        $dbSession->shop = $session->getShop();
-        $dbSession->state = $session->getState();
-        $dbSession->is_online = $session->isOnline();
+        $dbSession->session_id   = $session->getId();
+        $dbSession->shop         = $session->getShop();
+        $dbSession->state        = $session->getState();
+        $dbSession->is_online    = $session->isOnline();
         $dbSession->access_token = $session->getAccessToken();
-        $dbSession->expires_at = $session->getExpires();
-        $dbSession->scope = $session->getScope();
+        $dbSession->expires_at   = $session->getExpires();
+        $dbSession->scope        = $session->getScope();
         if (! empty($session->getOnlineAccessInfo())) {
-            $dbSession->user_id = $session->getOnlineAccessInfo()->getId();
-            $dbSession->user_first_name = $session->getOnlineAccessInfo()->getFirstName();
-            $dbSession->user_last_name = $session->getOnlineAccessInfo()->getLastName();
-            $dbSession->user_email = $session->getOnlineAccessInfo()->getEmail();
+            $dbSession->user_id             = $session->getOnlineAccessInfo()->getId();
+            $dbSession->user_first_name     = $session->getOnlineAccessInfo()->getFirstName();
+            $dbSession->user_last_name      = $session->getOnlineAccessInfo()->getLastName();
+            $dbSession->user_email          = $session->getOnlineAccessInfo()->getEmail();
             $dbSession->user_email_verified = $session->getOnlineAccessInfo()->isEmailVerified();
-            $dbSession->account_owner = $session->getOnlineAccessInfo()->isAccountOwner();
-            $dbSession->locale = $session->getOnlineAccessInfo()->getLocale();
-            $dbSession->collaborator = $session->getOnlineAccessInfo()->isCollaborator();
+            $dbSession->account_owner       = $session->getOnlineAccessInfo()->isAccountOwner();
+            $dbSession->locale              = $session->getOnlineAccessInfo()->getLocale();
+            $dbSession->collaborator        = $session->getOnlineAccessInfo()->isCollaborator();
         }
         try {
             return $dbSession->save();

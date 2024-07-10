@@ -15,10 +15,10 @@ class SearchController extends Controller
         $settings = Auth::user()->settings;
 
         $query = $request->validated('q');
-        $type = $request->validated('type');
+        $type  = $request->validated('type');
 
         $results = match ($type) {
-            'page'    => match ($settings->search_engine) {
+            'page' => match ($settings->search_engine) {
                 'typesense'   => Typesense\Page::search($query)->get(),
                 'meilisearch' => Meilisearch\Page::search($query)->get(),
                 default       => Pgsql\Page::search($query)->get(),

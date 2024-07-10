@@ -19,7 +19,7 @@ class EnsureShopifyInstalled
     {
         $shop = $request->query('shop') ? Utils::sanitizeShopDomain($request->query('shop')) : null;
 
-        $appInstalled = $shop && Session::where('shop', $shop)->where('access_token', '<>', null)->exists();
+        $appInstalled    = $shop && Session::where('shop', $shop)->where('access_token', '<>', null)->exists();
         $isExitingIframe = preg_match('/^ExitIframe/i', $request->path());
 
         return ($appInstalled || $isExitingIframe) ? $next($request) : AuthRedirection::redirect($request);

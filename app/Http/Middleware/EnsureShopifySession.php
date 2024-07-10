@@ -48,7 +48,7 @@ class EnsureShopifySession
                 );
         }
 
-        $shop = Utils::sanitizeShopDomain($request->query('shop', ''));
+        $shop    = Utils::sanitizeShopDomain($request->query('shop', ''));
         $session = Utils::loadCurrentSession($request->header(), $request->cookie(), $isOnline);
 
         if ($session && $shop && $session->getShop() !== $shop) {
@@ -60,9 +60,8 @@ class EnsureShopifySession
             if (Config::get('shopify.billing.required')) {
                 // The request to check billing status serves to validate that the access token is still valid.
                 try {
-                    [$hasPayment, $confirmationUrl] =
-                        EnsureBilling::check($session, Config::get('shopify.billing'));
-                    $proceed = true;
+                    [$hasPayment, $confirmationUrl] = EnsureBilling::check($session, Config::get('shopify.billing'));
+                    $proceed                        = true;
 
                     if (! $hasPayment) {
                         return TopLevelRedirection::redirect($request, $confirmationUrl);
@@ -72,7 +71,7 @@ class EnsureShopifySession
                 }
             } else {
                 // Make a request to ensure the access token is still valid. Otherwise, re-authenticate the user.
-                $client = new Graphql($session->getShop(), $session->getAccessToken());
+                $client   = new Graphql($session->getShop(), $session->getAccessToken());
                 $response = $client->query(self::TEST_GRAPHQL_QUERY);
 
                 $proceed = $response->getStatusCode() === 200;
@@ -92,7 +91,7 @@ class EnsureShopifySession
             } elseif (Context::$IS_EMBEDDED_APP) {
                 if ($bearerPresent !== false) {
                     $payload = Utils::decodeSessionToken($bearerMatches[1]);
-                    $shop = parse_url($payload['dest'], PHP_URL_HOST);
+                    $shop    = parse_url($payload['dest'], PHP_URL_HOST);
                 }
             }
         }

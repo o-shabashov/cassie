@@ -22,7 +22,7 @@ class CspHeader
         $shop = Utils::sanitizeShopDomain($request->query('shop', ''));
 
         if (Context::$IS_EMBEDDED_APP) {
-            $domainHost = $shop ? "https://$shop" : '*.myshopify.com';
+            $domainHost     = $shop ? "https://$shop" : '*.myshopify.com';
             $allowedDomains = "$domainHost https://admin.shopify.com";
         } else {
             $allowedDomains = "'none'";
@@ -40,7 +40,7 @@ class CspHeader
             foreach ($values as $index => $value) {
                 if (mb_strpos($value, 'frame-ancestors') === 0) {
                     $values[$index] = preg_replace('/^(frame-ancestors)/', "$1 $allowedDomains", $value);
-                    $found = true;
+                    $found          = true;
                     break;
                 }
             }

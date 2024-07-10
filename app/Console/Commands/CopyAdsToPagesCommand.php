@@ -21,7 +21,7 @@ class CopyAdsToPagesCommand extends Command
     {
         $faker = fake();
         $chunk = 1000;
-        $bar = $this->output->createProgressBar(500_000);
+        $bar   = $this->output->createProgressBar(500_000);
         $bar->start();
 
         match ($this->option('driver')) {

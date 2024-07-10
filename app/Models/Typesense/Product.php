@@ -32,11 +32,11 @@ class Product extends \App\Models\Product implements TypesenseDocument
     public function getCollectionSchema(): array
     {
         return [
-            'name'                  => $this->searchableAs(),
+            'name' => $this->searchableAs(),
             // 'enable_nested_fields'  => true,
             'default_sorting_field' => 'created_at',
             // 'token_separators'      => [':', '/', '.'],
-            'fields'                => [
+            'fields' => [
                 // [
                 //     'name' => '.*',
                 //     'type' => 'auto',

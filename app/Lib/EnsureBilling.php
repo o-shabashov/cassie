@@ -41,7 +41,7 @@ class EnsureBilling
         if (self::hasActivePayment($session, $config)) {
             $hasPayment = true;
         } else {
-            $hasPayment = false;
+            $hasPayment      = false;
             $confirmationUrl = self::requestPayment($session, $config);
         }
 
@@ -59,7 +59,7 @@ class EnsureBilling
 
     private static function hasSubscription(Session $session, array $config): bool
     {
-        $responseBody = self::queryOrException($session, self::RECURRING_PURCHASES_QUERY);
+        $responseBody  = self::queryOrException($session, self::RECURRING_PURCHASES_QUERY);
         $subscriptions = $responseBody['data']['currentAppInstallation']['activeSubscriptions'];
 
         foreach ($subscriptions as $subscription) {
@@ -110,9 +110,9 @@ class EnsureBilling
      */
     private static function requestPayment(Session $session, array $config)
     {
-        $hostName = Context::$HOST_NAME;
-        $shop = $session->getShop();
-        $host = base64_encode("$shop/admin");
+        $hostName  = Context::$HOST_NAME;
+        $shop      = $session->getShop();
+        $host      = base64_encode("$shop/admin");
         $returnUrl = "https://$hostName?shop={$shop}&host=$host";
 
         if (self::isRecurring($config)) {
@@ -186,7 +186,7 @@ class EnsureBilling
     {
         $client = new Graphql($session->getShop(), $session->getAccessToken());
 
-        $response = $client->query($query);
+        $response     = $client->query($query);
         $responseBody = $response->getDecodedBody();
 
         if (! empty($responseBody['errors'])) {

@@ -104,19 +104,19 @@ Route::post('/api/products', function (Request $request) {
     try {
         ProductCreator::call($session, 5);
         $success = true;
-        $code = 200;
-        $error = null;
+        $code    = 200;
+        $error   = null;
     } catch (\Exception $e) {
         $success = false;
 
         if ($e instanceof ShopifyProductCreatorException) {
-            $code = $e->response->getStatusCode();
+            $code  = $e->response->getStatusCode();
             $error = $e->response->getDecodedBody();
             if (array_key_exists('errors', $error)) {
                 $error = $error['errors'];
             }
         } else {
-            $code = 500;
+            $code  = 500;
             $error = $e->getMessage();
         }
 
