@@ -15,7 +15,7 @@ class SearchController extends Controller
         $settings = Auth::user()->settings;
 
         $query = $request->validated('q');
-        $type  = $request->validated('type');
+        $type = $request->validated('type');
 
         $results = match ($type) {
             'page'    => match ($settings->search_engine) {

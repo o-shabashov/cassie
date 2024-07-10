@@ -1,0 +1,9 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
+parameters:
+    paths:
+        - app/
+        - database/
+    level: 8
+    reportUnmatchedIgnoredErrors: false

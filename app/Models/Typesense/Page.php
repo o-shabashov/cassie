@@ -16,6 +16,7 @@ class Page extends \App\Models\Page implements TypesenseDocument
     {
         return app(EngineManager::class)->engine('typesense');
     }
+
     public function toSearchableArray(): array
     {
         return [
@@ -49,9 +50,9 @@ class Page extends \App\Models\Page implements TypesenseDocument
                     'type' => 'int64',
                 ],
                 [
-                    'name' => '__soft_deleted',
-                    'type' => 'int32',
-                    'optional' => true
+                    'name'     => '__soft_deleted',
+                    'type'     => 'int32',
+                    'optional' => true,
                 ],
             ],
             'default_sorting_field' => 'created_at',

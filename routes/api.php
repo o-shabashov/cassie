@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\SearchController;
-use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

@@ -17,13 +17,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement("CREATE EXTENSION pg_trgm");
+        DB::statement('CREATE EXTENSION pg_trgm');
 
         DB::statement(
             "ALTER TABLE pages ADD searchable tsvector generated always as(jsonb_to_tsvector('english', sections, '[\"all\"]')) stored"
         );
-        DB::statement("CREATE INDEX pages_searchable_index ON pages USING GIN (searchable)");
-        DB::statement("CREATE INDEX pages_titles_trgm_index ON pages USING GIN (title gin_trgm_ops)");
+        DB::statement('CREATE INDEX pages_searchable_index ON pages USING GIN (searchable)');
+        DB::statement('CREATE INDEX pages_titles_trgm_index ON pages USING GIN (title gin_trgm_ops)');
     }
 
     public function down(): void

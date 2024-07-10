@@ -15,6 +15,6 @@ class Product extends \App\Models\Product
         }
 
         return self::query()->whereRaw("title % '$query'")
-                   ->orWhereRaw("searchable @@ $operator('english', '$query:*')");
+            ->orWhereRaw("searchable @@ $operator('english', '$query:*')");
     }
 }

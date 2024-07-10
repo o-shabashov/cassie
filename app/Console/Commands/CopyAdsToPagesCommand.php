@@ -21,7 +21,7 @@ class CopyAdsToPagesCommand extends Command
     {
         $faker = fake();
         $chunk = 1000;
-        $bar   = $this->output->createProgressBar(500_000);
+        $bar = $this->output->createProgressBar(500_000);
         $bar->start();
 
         match ($this->option('driver')) {
@@ -35,10 +35,10 @@ class CopyAdsToPagesCommand extends Command
 
     private function meilisearchInsert($bar, $chunk): void
     {
-        Artisan::call('scout:flush', ["model" => Meilisearch\Page::class]);
+        Artisan::call('scout:flush', ['model' => Meilisearch\Page::class]);
 
         Meilisearch\Page::chunk($chunk, function (Collection $pages) use ($chunk, $bar) {
-            [, $duration] = Benchmark::value(fn() => $pages->searchable());
+            [, $duration] = Benchmark::value(fn () => $pages->searchable());
             $bar->advance($chunk);
 
             $this->info("Searchable {$bar->getProgress()} pages in $duration seconds");
@@ -47,10 +47,10 @@ class CopyAdsToPagesCommand extends Command
 
     private function typesenseInsert($bar, $chunk): void
     {
-        Artisan::call('scout:flush', ["model" => Typesense\Page::class]);
+        Artisan::call('scout:flush', ['model' => Typesense\Page::class]);
 
         Typesense\Page::chunk($chunk, function (Collection $pages) use ($chunk, $bar) {
-            [, $duration] = Benchmark::value(fn() => $pages->searchable());
+            [, $duration] = Benchmark::value(fn () => $pages->searchable());
             $bar->advance($chunk);
 
             $this->info("Searchable {$bar->getProgress()} pages in $duration seconds");
@@ -62,7 +62,7 @@ class CopyAdsToPagesCommand extends Command
         DB::table('ads')->orderBy('id')->chunk($chunk, function (Collection $ads) use ($faker, $bar, $chunk) {
             $durations = collect();
             foreach ($ads as $ad) {
-                [, $duration] = Benchmark::value(fn() => DB::table('pages')->insert([
+                [, $duration] = Benchmark::value(fn () => DB::table('pages')->insert([
                     'title'    => $faker->title,
                     'url'      => $faker->url,
                     'sections' => $ad->json,

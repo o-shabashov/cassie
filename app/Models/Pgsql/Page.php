@@ -15,6 +15,6 @@ class Page extends \App\Models\Page
         }
 
         return self::query()->whereRaw("title % '$query'")
-                   ->orWhereRaw("searchable @@ $operator('english', '$query:*')");
+            ->orWhereRaw("searchable @@ $operator('english', '$query:*')");
     }
 }
