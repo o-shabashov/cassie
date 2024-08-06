@@ -1,5 +1,6 @@
 <?php
 
+use App\Lib\CookieHandler;
 use App\Exceptions\ShopifyProductCreatorException;
 use App\Lib\AuthRedirection;
 use App\Lib\EnsureBilling;
@@ -58,7 +59,7 @@ Route::get('/api/auth/callback', function (Request $request) {
     $session = OAuth::callback(
         $request->cookie(),
         $request->query(),
-        ['App\Lib\CookieHandler', 'saveShopifyCookie'],
+        [CookieHandler::class, 'saveShopifyCookie'],
     );
 
     $host = $request->query('host');
@@ -87,7 +88,7 @@ Route::get('/api/auth/callback', function (Request $request) {
 });
 
 Route::get('/api/products/count', function (Request $request) {
-    /** @var AuthSession */
+    /** @var AuthSession $session */
     $session = $request->get('shopifySession'); // Provided by the shopify.auth middleware, guaranteed to be active
 
     $client = new Rest($session->getShop(), $session->getAccessToken());
@@ -97,10 +98,9 @@ Route::get('/api/products/count', function (Request $request) {
 })->middleware('shopify.auth');
 
 Route::post('/api/products', function (Request $request) {
-    /** @var AuthSession */
+    /** @var AuthSession $session */
     $session = $request->get('shopifySession'); // Provided by the shopify.auth middleware, guaranteed to be active
 
-    $success = $code = $error = null;
     try {
         ProductCreator::call($session, 5);
         $success = true;
