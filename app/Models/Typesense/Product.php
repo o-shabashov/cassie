@@ -33,39 +33,18 @@ class Product extends \App\Models\Product implements TypesenseDocument
     {
         return [
             'name' => $this->searchableAs(),
-            // 'enable_nested_fields'  => true,
+            'enable_nested_fields'  => true,
             'default_sorting_field' => 'created_at',
-            // 'token_separators'      => [':', '/', '.'],
+            'token_separators'      => [':', '/', '.'],
             'fields' => [
-                // [
-                //     'name' => '.*',
-                //     'type' => 'auto',
-                // ],
                 [
-                    'name' => 'title',
-                    'type' => 'string',
-                ],
-                [
-                    'name' => 'fields',
-                    'type' => 'object',
+                    'name' => '.*',
+                    'type' => 'auto',
                 ],
                 [
                     'name'  => '.*_facet',
                     'type'  => 'auto',
                     'facet' => true,
-                ],
-                [
-                    'name' => 'url',
-                    'type' => 'string',
-                ],
-                [
-                    'name' => 'created_at',
-                    'type' => 'int64',
-                ],
-                [
-                    'name'     => '__soft_deleted',
-                    'type'     => 'int32',
-                    'optional' => true,
                 ],
             ],
         ];
