@@ -1,7 +1,7 @@
-# Основные приницпы
-1. Schemaless - чтобы не мигрировать каждый раз базу
-2. Заранее определить какие поля у шопифая будут фасетами
-3. Хранение кастомных фасетов в юзер базе
+# Main goals
+1. Schemaless - avoid database migrations
+2. Hardcode main product fields as a facets
+3. Store custom product facets in the user db
 
 
 # Install
@@ -18,14 +18,16 @@ composer i
 
 # Roadmap
 ## MVP
-* [ ] Импорт данных
-* [ ] GUI поиска (docsearch.js)
+* [ ] Products data import by the GraphQL
+* [ ] GUI search (docsearch.js)
+* [ ] Client admin
+* [ ] Tariffs and money checkout
 
 ## Later
-* [ ] Возможность указывать вес полям в постгрес драйвере
-* [ ] Справляться с изменённой структурой в данных, будет ли работать поиск и индексация?
-* [ ] Генерирование кастомных моделей в рантайме?
-* [ ] Конвертирование схем между typesense и meilisearch
+* [ ] Ability to set columns weight for the PgSQL driver
+* [ ] Survive data structure changes - is search and indexation will work?
+* [ ] Generate custom models in runtime?
+* [ ] Convert schemas typesense <=> meilisearch
 
 # Drivers
 
@@ -34,34 +36,34 @@ composer i
 * Meilisearch
 * ? Elastic
 * ? Manged Elastic indexes by Postgres - Zombodb
+* ? Manticore
 
-# Метрики
+# Metrics
 
 ## Postgres
-### Размер индексов в полностью заполненных таблицах
+### Index size in fully populated tables
 
-### Скорость вставки данных
+### Data insertion speed
 
-### Скорость индексации
+### Indexing speed
 
-### Скорость поиска
-
+### Search speed
 
 ## Meilisearch
-### Размер индексов в полностью заполненных таблицах
+### Index size in fully populated tables
 
-### Скорость вставки данных
+### Data insertion speed
 
-### Скорость индексации
+### Indexing speed
 
-### Скорость поиска
+### Search speed
 
 
 ## Typesense
-### Размер индексов в полностью заполненных таблицах
+### Index size in fully populated tables
 
-### Скорость вставки данных
+### Data insertion speed
 
-### Скорость индексации
+### Indexing speed
 
-### Скорость поиска
+### Search speed
