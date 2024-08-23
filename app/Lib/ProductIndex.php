@@ -22,7 +22,10 @@ class ProductIndex
           id
           tags
           options {
+            id
             name
+            position
+            values
           }
           handle
           vendor
@@ -33,12 +36,6 @@ class ProductIndex
             minVariantPrice {
               amount
             }
-          }
-          options {
-            id
-            name
-            position
-            values
           }
           featuredImage {
             id
@@ -62,7 +59,7 @@ class ProductIndex
     }
 GRAPHQL;
 
-    public static function call(Session $session)
+    public static function call(Session $session): array|string|null
     {
         $client = new Graphql($session->getShop(), $session->getAccessToken());
         $response = $client->query(
