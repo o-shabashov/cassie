@@ -22,10 +22,18 @@ class ProductIndex
           id
           tags
           options {
-            id
             name
+            id
             position
             values
+          }
+          metafields(first: 250) {
+            nodes {
+              id
+              key
+              value
+              jsonValue
+            }
           }
           handle
           vendor
