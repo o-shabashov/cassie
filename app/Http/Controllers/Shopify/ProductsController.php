@@ -34,6 +34,7 @@ class ProductsController extends Controller
     public function storeMany(Request $request): JsonResponse
     {
         $this->authorize('create', Product::class);
+
         /** @var AuthSession $session */
         $session = $request->get('shopifySession'); // Provided by the shopify.auth middleware, guaranteed to be active
 
