@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Lib;
 
-use App\Exceptions\ShopifyProductCreatorException;
+use App\Exceptions\ShopifyProductException;
+use JsonException;
 use Shopify\Auth\Session;
 use Shopify\Clients\Graphql;
 use Shopify\Clients\HttpResponse;
+use Shopify\Exception\HttpRequestException;
+use Shopify\Exception\MissingArgumentException;
 
 class ProductIndex
 {
@@ -21,9 +24,10 @@ class ProductIndex
         nodes {
           id
           tags
+          title
           options {
-            name
             id
+            name
             position
             values
           }
@@ -49,7 +53,7 @@ class ProductIndex
             id
             url
           }
-          description(truncateAt: 200)
+          description
           variants(first: 100) {
             pageInfo {
               endCursor
@@ -67,19 +71,25 @@ class ProductIndex
     }
 GRAPHQL;
 
+    /**
+     * @throws HttpRequestException
+     * @throws ShopifyProductException
+     * @throws MissingArgumentException
+     * @throws JsonException
+     */
     public static function call(Session $session): array|string|null
     {
-        $client = new Graphql($session->getShop(), $session->getAccessToken());
+        $client   = new Graphql($session->getShop(), $session->getAccessToken());
         $response = $client->query(
             [
-                'query'     => self::INDEX_PRODUCTS,
+                'query' => self::INDEX_PRODUCTS,
             ],
         );
 
         $body = HttpResponse::fromResponse($response)->getDecodedBody();
 
         if ($response->getStatusCode() !== 200 || isset($body['errors'])) {
-            throw new ShopifyProductCreatorException($response->getBody()->__toString(), $response);
+            throw new ShopifyProductException($response->getBody()->__toString(), $response);
         }
 
         return $body;

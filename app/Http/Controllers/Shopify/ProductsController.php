@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Shopify;
 
-use App\Exceptions\ShopifyProductCreatorException;
+use App\Exceptions\ShopifyProductException;
 use App\Http\Controllers\Controller;
 use App\Lib\ProductCreator;
 use App\Models\Product;
@@ -46,7 +46,7 @@ class ProductsController extends Controller
         } catch (Exception $e) {
             $success = false;
 
-            if ($e instanceof ShopifyProductCreatorException) {
+            if ($e instanceof ShopifyProductException) {
                 $code  = $e->response->getStatusCode();
                 $error = $e->response->getDecodedBody();
                 if (array_key_exists('errors', $error)) {

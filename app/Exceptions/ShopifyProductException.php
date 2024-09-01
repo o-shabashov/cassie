@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Shopify\Clients\HttpResponse;
 
-class ShopifyProductCreatorException extends Exception
+class ShopifyProductException extends Exception
 {
     public HttpResponse $response;
 

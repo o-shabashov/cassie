@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IndexationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Shopify\AuthController;
 use App\Http\Controllers\Shopify\ProductsController;
@@ -45,6 +46,10 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/auth/callback', 'callback');
 });
 
+Route::controller(IndexationController::class)->group(function () {
+   Route::post('/full-reindex', 'fullReindex');
+});
+
 Route::post('/webhooks', function (Request $request) {
     try {
         $topic = $request->header(HttpHeaders::X_SHOPIFY_TOPIC, '');
@@ -59,7 +64,7 @@ Route::post('/webhooks', function (Request $request) {
         Log::error("Got invalid webhook request for topic '$topic': {$e->getMessage()}");
 
         return response()->json(['message' => "Got invalid webhook request for topic '$topic'"], 401);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         Log::error("Got an exception when handling '$topic' webhook: {$e->getMessage()}");
 
         return response()->json(['message' => "Got an exception when handling '$topic' webhook"], 500);
