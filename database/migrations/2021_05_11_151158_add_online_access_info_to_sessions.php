@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class AddOnlineAccessInfoToSessions extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('sessions', function (Blueprint $table) {
@@ -25,11 +20,6 @@ class AddOnlineAccessInfoToSessions extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('sessions', function (Blueprint $table) {

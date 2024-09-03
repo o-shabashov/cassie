@@ -14,7 +14,7 @@ class Product extends Model
         'title',
         'fields',
         'url',
-        'shopify_id'
+        'shopify_id',
     ];
 
     protected $casts = [

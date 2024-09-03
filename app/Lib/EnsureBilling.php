@@ -11,15 +11,84 @@ use Shopify\Context;
 
 class EnsureBilling
 {
+    private static $RECURRING_INTERVALS = [
+        self::INTERVAL_EVERY_30_DAYS, self::INTERVAL_ANNUAL,
+    ];
+
     public const INTERVAL_ONE_TIME = 'ONE_TIME';
 
     public const INTERVAL_EVERY_30_DAYS = 'EVERY_30_DAYS';
 
     public const INTERVAL_ANNUAL = 'ANNUAL';
 
-    private static $RECURRING_INTERVALS = [
-        self::INTERVAL_EVERY_30_DAYS, self::INTERVAL_ANNUAL,
-    ];
+    private const RECURRING_PURCHASES_QUERY = <<<'QUERY'
+    query appSubscription {
+        currentAppInstallation {
+            activeSubscriptions {
+                name, test
+            }
+        }
+    }
+    QUERY;
+
+    private const ONE_TIME_PURCHASES_QUERY = <<<'QUERY'
+    query appPurchases($endCursor: String) {
+        currentAppInstallation {
+            oneTimePurchases(first: 250, sortKey: CREATED_AT, after: $endCursor) {
+                edges {
+                    node {
+                        name, test, status
+                    }
+                }
+                pageInfo {
+                    hasNextPage, endCursor
+                }
+            }
+        }
+    }
+    QUERY;
+
+    private const RECURRING_PURCHASE_MUTATION = <<<'QUERY'
+    mutation createPaymentMutation(
+        $name: String!
+        $lineItems: [AppSubscriptionLineItemInput!]!
+        $returnUrl: URL!
+        $test: Boolean
+    ) {
+        appSubscriptionCreate(
+            name: $name
+            lineItems: $lineItems
+            returnUrl: $returnUrl
+            test: $test
+        ) {
+            confirmationUrl
+            userErrors {
+                field, message
+            }
+        }
+    }
+    QUERY;
+
+    private const ONE_TIME_PURCHASE_MUTATION = <<<'QUERY'
+    mutation createPaymentMutation(
+        $name: String!
+        $price: MoneyInput!
+        $returnUrl: URL!
+        $test: Boolean
+    ) {
+        appPurchaseOneTimeCreate(
+            name: $name
+            price: $price
+            returnUrl: $returnUrl
+            test: $test
+        ) {
+            confirmationUrl
+            userErrors {
+                field, message
+            }
+        }
+    }
+    QUERY;
 
     /**
      * Check if the given session has an active payment based on the configs.
@@ -195,73 +264,4 @@ class EnsureBilling
 
         return $responseBody;
     }
-
-    private const RECURRING_PURCHASES_QUERY = <<<'QUERY'
-    query appSubscription {
-        currentAppInstallation {
-            activeSubscriptions {
-                name, test
-            }
-        }
-    }
-    QUERY;
-
-    private const ONE_TIME_PURCHASES_QUERY = <<<'QUERY'
-    query appPurchases($endCursor: String) {
-        currentAppInstallation {
-            oneTimePurchases(first: 250, sortKey: CREATED_AT, after: $endCursor) {
-                edges {
-                    node {
-                        name, test, status
-                    }
-                }
-                pageInfo {
-                    hasNextPage, endCursor
-                }
-            }
-        }
-    }
-    QUERY;
-
-    private const RECURRING_PURCHASE_MUTATION = <<<'QUERY'
-    mutation createPaymentMutation(
-        $name: String!
-        $lineItems: [AppSubscriptionLineItemInput!]!
-        $returnUrl: URL!
-        $test: Boolean
-    ) {
-        appSubscriptionCreate(
-            name: $name
-            lineItems: $lineItems
-            returnUrl: $returnUrl
-            test: $test
-        ) {
-            confirmationUrl
-            userErrors {
-                field, message
-            }
-        }
-    }
-    QUERY;
-
-    private const ONE_TIME_PURCHASE_MUTATION = <<<'QUERY'
-    mutation createPaymentMutation(
-        $name: String!
-        $price: MoneyInput!
-        $returnUrl: URL!
-        $test: Boolean
-    ) {
-        appPurchaseOneTimeCreate(
-            name: $name
-            price: $price
-            returnUrl: $returnUrl
-            test: $test
-        ) {
-            confirmationUrl
-            userErrors {
-                field, message
-            }
-        }
-    }
-    QUERY;
 }

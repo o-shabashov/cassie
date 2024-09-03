@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/search', [SearchController::class, 'search']);
+Route::get('search', [SearchController::class, 'search']);
 
 /*
 |--------------------------------------------------------------------------
@@ -36,21 +36,21 @@ Route::get('/search', [SearchController::class, 'search']);
 */
 Route::middleware(EnsureShopifySession::class)->group(function () {
     Route::controller(ProductsController::class)->group(function () {
-        Route::get('/products/count', 'count');
-        Route::post('/products', 'storeMany');
+        Route::get('products/count', 'count');
+        Route::post('products', 'storeMany');
     });
 });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/auth', 'auth');
-    Route::post('/auth/callback', 'callback');
+    Route::get('auth', 'auth');
+    Route::post('auth/callback', 'callback');
 });
 
 Route::controller(IndexationController::class)->group(function () {
-   Route::post('/full-reindex', 'fullReindex');
+    Route::post('full-reindex', 'fullReindex');
 });
 
-Route::post('/webhooks', function (Request $request) {
+Route::post('webhooks', function (Request $request) {
     try {
         $topic = $request->header(HttpHeaders::X_SHOPIFY_TOPIC, '');
 

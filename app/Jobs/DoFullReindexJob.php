@@ -19,9 +19,7 @@ class DoFullReindexJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public ShopifySession $session)
-    {
-    }
+    public function __construct(public ShopifySession $session) {}
 
     public function handle(): void
     {
@@ -30,17 +28,17 @@ class DoFullReindexJob implements ShouldQueue
                 ->each(function ($product) {
                     Product::updateOrCreate(
                         [
-                            'shopify_id' => (int) Str::remove('gid://shopify/Product/', $product['id'])
+                            'shopify_id' => (int) Str::remove('gid://shopify/Product/', $product['id']),
                         ],
                         [
-                            'title' => $product['title'],
-                            'fields' => $product,
-                            'url' => $product['handle'],
+                            'title'      => $product['title'],
+                            'fields'     => $product,
+                            'url'        => $product['handle'],
                             'created_at' => $product['createdAt'],
                             'updated_at' => $product['updatedAt'],
                         ]
                     );
-            });
+                });
         } catch (Exception $e) {
             if ($e instanceof ShopifyProductException) {
                 $error = data_get($$e->response->getDecodedBody(), 'errors');

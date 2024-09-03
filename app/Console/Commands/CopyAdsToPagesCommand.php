@@ -4,10 +4,10 @@ namespace App\Console\Commands;
 
 use App\Models\Meilisearch;
 use App\Models\Typesense;
-use Artisan;
 use Illuminate\Console\Command;
 use Illuminate\Support\Benchmark;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 class CopyAdsToPagesCommand extends Command
