@@ -30,6 +30,7 @@ services:
             - minio
             - typesense
             - meilisearch
+
     pgsql:
         image: 'postgres:15'
         ports:
@@ -55,6 +56,7 @@ services:
                 - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
+
     redis:
         image: 'redis:alpine'
         ports:
@@ -70,6 +72,7 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+
     memcached:
         image: 'memcached:alpine'
         ports:
@@ -112,6 +115,7 @@ services:
                 - 'http://localhost:9000/minio/health/live'
             retries: 3
             timeout: 5s
+
     typesense:
         image: 'typesense/typesense:26.0'
         restart: on-failure
@@ -129,6 +133,11 @@ services:
                 - 'http://localhost:8108/health'
             retries: 3
             timeout: 5s
+
+    typesense-dashboard:
+        ports:
+            - "80:80"
+        image: 'ghcr.io/bfritscher/typesense-dashboard:latest'
 
     meilisearch:
         image: 'getmeili/meilisearch:latest'
@@ -149,6 +158,7 @@ services:
                 - 'http://localhost:7700/health'
             retries: 3
             timeout: 5s
+
 networks:
     sail:
         driver: bridge
