@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('shopify_id')->unique()->after('id');
+            $table->bigInteger('shopify_id')->unique()->after('id');
         });
     }
 };

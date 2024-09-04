@@ -42,6 +42,10 @@ class Product extends \App\Models\Product implements TypesenseDocument
                     'type' => 'auto',
                 ],
                 [
+                    'name' => 'created_at',
+                    'type' => 'int64',
+                ],
+                [
                     'name'  => '.*_facet',
                     'type'  => 'auto',
                     'facet' => true,
