@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Cassie;
 
 use App\Exceptions\ShopifyProductException;
 use App\Lib\ProductIndex;
