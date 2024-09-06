@@ -50,6 +50,7 @@
     "typesense/laravel-scout-typesense-driver" : "^5.2"
   },
   "require-dev" : {
+    "aschmelyun/fleet": "^1.1",
     "fakerphp/faker": "^1.9.1",
     "larastan/larastan": "^2.9",
     "laravel/pint": "^1.16",
