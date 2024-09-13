@@ -18,7 +18,6 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
-            - fleet
         labels:
             - traefik.http.routers.search-or-die-localhost.rule=Host(`search-or-die.localhost`)
             - traefik.http.services.search-or-die-localhost.loadbalancer.server.port=80
@@ -26,6 +25,4 @@ services:
 networks:
     sail:
         driver: bridge
-        external: true
-    fleet:
         external: true
