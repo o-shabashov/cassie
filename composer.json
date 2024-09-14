@@ -36,25 +36,23 @@
   "name" : "laravel/laravel",
   "prefer-stable" : true,
   "require" : {
+    "php" : "^8.3",
     "guzzlehttp/guzzle" : "^7.2",
     "http-interop/http-factory-guzzle" : "^1.2",
     "laravel/framework" : "^11.0",
-    "laravel/pail" : "^1.0",
     "laravel/sanctum" : "^4.0",
     "laravel/scout" : "^10.6",
-    "laravel/tinker" : "^2.8",
     "meilisearch/meilisearch-php" : "^1.6",
-    "php" : "^8.2",
     "php-http/guzzle7-adapter" : "^1.0",
-    "shopify/shopify-api" : "^5.0",
     "typesense/laravel-scout-typesense-driver" : "^5.2"
   },
   "require-dev" : {
-    "aschmelyun/fleet": "^1.1",
     "fakerphp/faker": "^1.9.1",
     "larastan/larastan": "^2.9",
+    "laravel/pail": "*",
     "laravel/pint": "^1.16",
     "laravel/sail": "^1.18",
+    "laravel/tinker": "*",
     "mockery/mockery": "^1.4.4",
     "nunomaduro/collision": "^8.1",
     "phpunit/phpunit": "^10.1",
@@ -62,8 +60,6 @@
     "tightenco/duster": "^3.0"
   },
   "scripts" : {
-    "build" : "composer build-frontend-links",
-    "build-frontend-links" : "ln -sf ../frontend/dist/assets public/assets && ln -sf ../frontend/dist/index.html public/index.html",
     "post-autoload-dump" : [
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
       "@php artisan package:discover --ansi"
@@ -76,10 +72,6 @@
     ],
     "post-update-cmd" : [
       "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-    ],
-    "serve" : [
-      "Composer\\Config::disableProcessTimeout",
-      "php artisan serve"
     ],
     "phpstan": [
       "./vendor/bin/phpstan analyze --memory-limit=2G"

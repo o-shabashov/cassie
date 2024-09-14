@@ -7,6 +7,7 @@ use App\Lib\ProductIndex;
 use App\Models\Meilisearch;
 use App\Models\Product;
 use App\Models\Typesense;
+use App\Models\User;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,19 +17,19 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Shopify\Auth\Session as ShopifySession;
 
 class DoFullReindexJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public ShopifySession $session) {}
+    public function __construct(public User $user) {}
 
     public function handle(): void
     {
+        dd($this->user);
         try {
             // 1. Insert all products to the database
-            collect(data_get(ProductIndex::call($this->session), 'data.products.nodes'))
+            collect(data_get(ProductIndex::call($this->user), 'data.products.nodes'))
                 ->each(function ($product) {
                     Product::updateOrCreate(
                         [
