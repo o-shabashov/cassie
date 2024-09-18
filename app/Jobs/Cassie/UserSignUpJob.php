@@ -13,27 +13,27 @@ class UserSignUpJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
-    public function __construct(public User $shopifyAdminUser)
+    public function __construct(public User $shopifyUser)
     {
     }
 
     public function handle(): void
     {
         $user = User::updateOrCreate(
-            ['name' => $this->shopifyAdminUser->name],
+            ['name' => $this->shopifyUser->name],
             [
-                'email'                => $this->shopifyAdminUser->email,
-                'email_verified_at'    => $this->shopifyAdminUser->email_verified_at,
-                'shopify_access_token' => $this->shopifyAdminUser->password,
-                'password'             => $this->shopifyAdminUser->password,
+                'email'                => $this->shopifyUser->email,
+                'email_verified_at'    => $this->shopifyUser->email_verified_at,
+                'shopify_access_token' => $this->shopifyUser->password,
+                'password'             => $this->shopifyUser->password,
             ]
         );
 
         $user->tokens()->delete();
 
-        ShopifyAdminUser::find($this->shopifyAdminUser->id)->update([
+        ShopifyAdminUser::find($this->shopifyUser->id)->update([
             'cassie_id'           => $user->id,
-            'cassie_access_token' => $user->createToken($this->shopifyAdminUser->name)->plainTextToken,
+            'cassie_access_token' => $user->createToken($this->shopifyUser->name)->plainTextToken,
         ]);
     }
 }
