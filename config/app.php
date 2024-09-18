@@ -171,6 +171,7 @@ return [
 
         Laravel\Scout\ScoutServiceProvider::class,
         Typesense\LaravelTypesense\TypesenseServiceProvider::class,
+        App\Providers\ShopifyApiServiceProvider::class,
     ])->toArray(),
 
     /*

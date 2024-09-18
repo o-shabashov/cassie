@@ -2,9 +2,8 @@
 
 namespace Tests\Feature\ShopifyApi;
 
+use App\Models\User;
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
-use Gnikyt\BasicShopifyAPI\Options;
-use Gnikyt\BasicShopifyAPI\Session;
 use JetBrains\PhpStorm\NoReturn;
 use Tests\FeatureTestCase;
 
@@ -70,18 +69,15 @@ GRAPHQL;
     #[NoReturn]
     public function testBasic()
     {
-        $accessToken = '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';
-        $shop        = 'quickstart-dbca5a72.myshopify.com';
+        $user = User::factory()->create([
+            'shopify_access_token' => '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',
+            'name'                 => 'quickstart-dbca5a72.myshopify.com',
+        ]);
 
-        // Create options for the API
-        $options = new Options();
-        $options->setVersion(config('services.shopify.api_version'));
+        $this->actingAs($user);
 
-        // Create the client and session
-        $api = new BasicShopifyAPI($options);
-        $api->setSession(new Session($shop, $accessToken));
+        $api = app(BasicShopifyAPI::class);
 
-        // Now run your requests...
         $result = $api->graph(self::INDEX_PRODUCTS);
         dd($result);
     }
