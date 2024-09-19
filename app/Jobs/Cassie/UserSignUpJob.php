@@ -13,27 +13,28 @@ class UserSignUpJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
-    public function __construct(public User $shopifyUser)
-    {
+    // TODO use SimpleDTO here https://wendell-adriel.gitbook.io/laravel-validated-dto/basics/simple-dtos
+    public function __construct(
+        public int $shopifyUserId,
+        public string $shopName,
+        public string $shopifyAccessToken
+    ) {
     }
 
     public function handle(): void
     {
         $user = User::updateOrCreate(
-            ['name' => $this->shopifyUser->name],
+            ['name' => $this->shopName],
             [
-                'email'                => $this->shopifyUser->email,
-                'email_verified_at'    => $this->shopifyUser->email_verified_at,
-                'shopify_access_token' => $this->shopifyUser->password,
-                'password'             => $this->shopifyUser->password,
+                'shopify_access_token' => $this->shopifyAccessToken,
             ]
         );
 
         $user->tokens()->delete();
 
-        ShopifyAdminUser::find($this->shopifyUser->id)->update([
+        ShopifyAdminUser::find($this->shopifyUserId)->update([
             'cassie_id'           => $user->id,
-            'cassie_access_token' => $user->createToken($this->shopifyUser->name)->plainTextToken,
+            'cassie_access_token' => $user->createToken($this->shopName)->plainTextToken,
         ]);
     }
 }
