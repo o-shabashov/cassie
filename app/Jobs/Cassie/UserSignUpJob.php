@@ -4,37 +4,22 @@ namespace App\Jobs\Cassie;
 
 use App\Models\ShopifyAdmin\ShopifyAdminUser;
 use App\Models\User;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
 
-class UserSignUpJob implements ShouldQueue
+class UserSignUpJob extends BaseCassieHighQueueJob
 {
-    use Dispatchable, InteractsWithQueue, Queueable;
-
-    // TODO use SimpleDTO here https://wendell-adriel.gitbook.io/laravel-validated-dto/basics/simple-dtos
-    public function __construct(
-        public int $shopifyUserId,
-        public string $shopName,
-        public string $shopifyAccessToken
-    ) {
-    }
-
     public function handle(): void
     {
         $user = User::updateOrCreate(
-            ['name' => $this->shopName],
+            ['name' => $this->shopifyUserDto->name],
             [
-                'shopify_access_token' => $this->shopifyAccessToken,
+                'shopify_access_token' => $this->shopifyUserDto->password,
             ]
         );
+        $user->tokens()?->delete();
 
-        $user->tokens()->delete();
-
-        ShopifyAdminUser::find($this->shopifyUserId)->update([
+        ShopifyAdminUser::find($this->shopifyUserDto->id)->update([
             'cassie_id'           => $user->id,
-            'cassie_access_token' => $user->createToken($this->shopName)->plainTextToken,
+            'cassie_access_token' => $user->createToken($this->shopifyUserDto->name)->plainTextToken,
         ]);
     }
 }

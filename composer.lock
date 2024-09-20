@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d8e95685f79c4490344a87c9f6cc9ef",
+    "content-hash": "d0582f1c996751882b85b0b10a690001",
     "packages": [
         {
             "name": "brick/math",
@@ -207,6 +207,37 @@
                 }
             ],
             "time": "2024-09-16T19:01:08+00:00"
+        },
+        {
+            "name": "cassie/common",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:o-shabashov/common.git",
+                "reference": "3137cc142f67070d46bb2349f6c1adf0e3850799"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/o-shabashov/common/zipball/3137cc142f67070d46bb2349f6c1adf0e3850799",
+                "reference": "3137cc142f67070d46bb2349f6c1adf0e3850799",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3",
+                "wendelladriel/laravel-validated-dto": "^3.8"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "App\\": "src/App/"
+                }
+            },
+            "support": {
+                "source": "https://github.com/o-shabashov/common/tree/main",
+                "issues": "https://github.com/o-shabashov/common/issues"
+            },
+            "time": "2024-09-20T07:43:55+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -6625,6 +6656,80 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "wendelladriel/laravel-validated-dto",
+            "version": "v3.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WendellAdriel/laravel-validated-dto.git",
+                "reference": "18e452136eca72fdb4107dae7b3875944fbaa494"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WendellAdriel/laravel-validated-dto/zipball/18e452136eca72fdb4107dae7b3875944fbaa494",
+                "reference": "18e452136eca72fdb4107dae7b3875944fbaa494",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^9.0|^10.0|^11.0",
+                "illuminate/database": "^9.0|^10.0|^11.0",
+                "illuminate/http": "^9.0|^10.0|^11.0",
+                "illuminate/support": "^9.0|^10.0|^11.0",
+                "illuminate/validation": "^9.0|^10.0|^11.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.14",
+                "orchestra/testbench": "^7.0|^8.0|^9.0",
+                "pestphp/pest": "^1.20|^2.0",
+                "pestphp/pest-plugin-faker": "^1.0|^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "WendellAdriel\\ValidatedDTO\\Providers\\ValidatedDTOServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WendellAdriel\\ValidatedDTO\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wendell Adriel",
+                    "email": "wendelladriel.ti@gmail.com"
+                }
+            ],
+            "description": "Data Transfer Objects with validation for Laravel applications",
+            "keywords": [
+                "Data Transfer Object",
+                "dto",
+                "laravel",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/WendellAdriel/laravel-validated-dto/issues",
+                "source": "https://github.com/WendellAdriel/laravel-validated-dto"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/wendelladriel",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/WendellAdriel",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-07-24T09:43:13+00:00"
         }
     ],
     "packages-dev": [
@@ -10013,7 +10118,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "cassie/common": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
