@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\ShopifyApi;
 
+use App\GraphQL\ShopifyProduct;
 use App\Models\User;
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
 use JetBrains\PhpStorm\NoReturn;
@@ -9,68 +10,12 @@ use Tests\FeatureTestCase;
 
 class GraphQLRequestsTest extends FeatureTestCase
 {
-    private const INDEX_PRODUCTS = <<<'GRAPHQL'
-     query {
-      products(first: 250) {
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        nodes {
-          id
-          tags
-          title
-          options {
-            id
-            name
-            position
-            values
-          }
-          metafields(first: 250) {
-            nodes {
-              id
-              key
-              value
-              jsonValue
-            }
-          }
-          handle
-          vendor
-          status
-          updatedAt
-          createdAt
-          priceRangeV2 {
-            minVariantPrice {
-              amount
-            }
-          }
-          featuredImage {
-            id
-            url
-          }
-          description
-          variants(first: 100) {
-            pageInfo {
-              endCursor
-              startCursor
-            }
-            nodes {
-              id
-              title
-              displayName
-              price
-            }
-          }
-        }
-      }
-    }
-GRAPHQL;
-
     #[NoReturn]
     public function testBasic()
     {
+        // TODO create real dedicated test app and use it access token / shop domain
         $user = User::factory()->create([
-            'shopify_access_token' => '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',
+            'shopify_access_token' => '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',
             'name'                 => 'quickstart-dbca5a72.myshopify.com',
         ]);
 
@@ -78,7 +23,11 @@ GRAPHQL;
 
         $api = app(BasicShopifyAPI::class);
 
-        $result = $api->graph(self::INDEX_PRODUCTS);
-        dd($result);
+        $result = ShopifyProduct::index($api);
+
+        $this->assertEquals(200, $result['status']);
+        $this->assertFalse($result['errors']);
+        $this->assertFalse(data_get($result, 'body.container.data.products.pageInfo.hasNextPage'));
+        $this->assertNotEmpty(data_get($result, 'body.container.data.products.nodes'));
     }
 }

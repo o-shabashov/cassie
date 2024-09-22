@@ -21,7 +21,7 @@ class DoFullReindexJob extends BaseCassieHighQueueJob
             $api = app(BasicShopifyAPI::class, ['shop' => $this->shopifyUserDto->name, 'accessToken' => $this->shopifyUserDto->password]);
 
             // 1. Insert all products to the database
-            collect(data_get(ShopifyProduct::index($api), 'data.products.nodes'))
+            collect(data_get(ShopifyProduct::index($api), 'body.container.data.products.nodes'))
                 ->each(function ($product) {
                     Product::updateOrCreate(
                         [
