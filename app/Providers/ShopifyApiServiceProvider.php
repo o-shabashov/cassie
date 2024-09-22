@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\User;
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
 use Gnikyt\BasicShopifyAPI\Options;
 use Gnikyt\BasicShopifyAPI\Session;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,15 +14,17 @@ class ShopifyApiServiceProvider extends ServiceProvider implements DeferrablePro
 {
     public function register(): void
     {
-        $this->app->singleton(BasicShopifyAPI::class, function () {
-            /** @var User $user */
-            $user = Auth::user();
-
+        $this->app->singleton(BasicShopifyAPI::class, function (Application $app, array $params) {
             $options = new Options();
             $options->setVersion(config('services.shopify.api_version'));
 
             $api = new BasicShopifyAPI($options);
-            $api->setSession(new Session($user->name, $user->shopify_access_token));
+
+            if ($params) {
+                $api->setSession(new Session(...$params));
+            } else {
+                $api->setSession(new Session(shop: Auth::user()->name, accessToken: Auth::user()->shopify_access_token));
+            }
 
             return $api;
         });
