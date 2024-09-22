@@ -3,33 +3,25 @@
 namespace App\Jobs\Cassie;
 
 use App\Exceptions\ShopifyProductException;
-use App\Lib\ProductIndex;
+use App\GraphQL\ShopifyProduct;
 use App\Models\Meilisearch;
 use App\Models\Product;
 use App\Models\Typesense;
-use App\Models\User;
 use Exception;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class DoFullReindexJob implements ShouldQueue
+class DoFullReindexJob extends BaseCassieHighQueueJob
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    public function __construct(public User $user) {}
-
     public function handle(): void
     {
-        dd($this->user);
         try {
+            $api = app(BasicShopifyAPI::class, ['shop' => $this->shopifyUserDto->name, 'accessToken' => $this->shopifyUserDto->password]);
+
             // 1. Insert all products to the database
-            collect(data_get(ProductIndex::call($this->user), 'data.products.nodes'))
+            collect(data_get(ShopifyProduct::index($api), 'data.products.nodes'))
                 ->each(function ($product) {
                     Product::updateOrCreate(
                         [
@@ -55,7 +47,6 @@ class DoFullReindexJob implements ShouldQueue
             // 3. Send all products to the backup search engine
             Meilisearch\Product::all()->searchable();
             Typesense\Product::all()->searchable();
-
         } catch (Exception $e) {
             if ($e instanceof ShopifyProductException) {
                 $error = data_get($$e->response->getDecodedBody(), 'errors');
