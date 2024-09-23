@@ -18,8 +18,9 @@ composer i
 
 # Roadmap
 ## MVP
-* [ ] Add basic Shopify api
-* [ ] Products data import by the GraphQL
+* [X] Add basic Shopify api
+* [X] Products data import by the GraphQL
+* [ ] Basic search features - synonyms, merchandise, etc.
 * [ ] GUI search (docsearch.js)
 * [ ] Client admin
 * [ ] Tariffs and money checkout
