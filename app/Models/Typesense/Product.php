@@ -2,6 +2,7 @@
 
 namespace App\Models\Typesense;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
@@ -9,9 +10,7 @@ use Typesense\LaravelTypesense\Interfaces\TypesenseDocument;
 
 class Product extends \App\Models\Product implements TypesenseDocument
 {
-    use Searchable;
-
-    protected $casts = [];
+    use Searchable, HasFactory;
 
     public function searchableUsing(): Engine
     {
