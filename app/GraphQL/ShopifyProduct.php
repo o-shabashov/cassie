@@ -7,7 +7,7 @@ use GuzzleHttp\Promise\Promise;
 
 class ShopifyProduct
 {
-    public static function index(
+    public static function get(
         BasicShopifyAPI $api,
         int $productsCount = 250,
         int $metafieldsCount = 250,
