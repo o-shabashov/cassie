@@ -6,9 +6,9 @@ use App\GraphQL\ShopifyProduct;
 use App\Models\User;
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
 use JetBrains\PhpStorm\NoReturn;
-use Tests\FeatureTestCase;
+use Tests\PageSearchTestCase;
 
-class GraphQLRequestsTest extends FeatureTestCase
+class GraphQLRequestsTest extends PageSearchTestCase
 {
     #[NoReturn]
     public function testBasic()

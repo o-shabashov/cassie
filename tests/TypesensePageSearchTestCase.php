@@ -4,7 +4,7 @@ namespace Tests;
 
 use App\Models\Typesense;
 
-abstract class TypesenseFeatureTestCase extends FeatureTestCase
+abstract class TypesensePageSearchTestCase extends PageSearchTestCase
 {
     protected function setUp(): void
     {

@@ -6,7 +6,7 @@ use App\Models;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-abstract class FeatureTestCase extends BaseTestCase
+abstract class PageSearchTestCase extends BaseTestCase
 {
     use CreatesApplication;
     use DatabaseTransactions;

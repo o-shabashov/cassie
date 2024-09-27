@@ -3,9 +3,9 @@
 namespace Tests\Feature\Meilisearch;
 
 use App\Models\Meilisearch;
-use Tests\MeilisearchFeatureTestCase;
+use Tests\MeilisearchPageSearchTestCase;
 
-class PageTest extends MeilisearchFeatureTestCase
+class PageTest extends MeilisearchPageSearchTestCase
 {
     public function testCustomStructureIsSearchable(): void
     {

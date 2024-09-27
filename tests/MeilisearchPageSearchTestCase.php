@@ -4,7 +4,7 @@ namespace Tests;
 
 use App\Models\Meilisearch;
 
-abstract class MeilisearchFeatureTestCase extends FeatureTestCase
+abstract class MeilisearchPageSearchTestCase extends PageSearchTestCase
 {
     protected function setUp(): void
     {

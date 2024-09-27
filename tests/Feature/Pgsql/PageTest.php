@@ -3,9 +3,9 @@
 namespace Tests\Feature\Pgsql;
 
 use App\Models\Pgsql;
-use Tests\FeatureTestCase;
+use Tests\PageSearchTestCase;
 
-class PageTest extends FeatureTestCase
+class PageTest extends PageSearchTestCase
 {
     public function testCustomStructureIsSearchable(): void
     {
