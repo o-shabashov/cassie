@@ -4,9 +4,9 @@ namespace Tests;
 
 use App\Models;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
-abstract class PageSearchTestCase extends BaseTestCase
+abstract class PageSearchTestCase extends TestCase
 {
     use CreatesApplication;
     use DatabaseTransactions;

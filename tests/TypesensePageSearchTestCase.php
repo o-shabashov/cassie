@@ -11,7 +11,7 @@ abstract class TypesensePageSearchTestCase extends PageSearchTestCase
         parent::setUp();
 
         Typesense\Page::all()->searchable();
-        sleep(1);
+        sleep(1); // Waiting for the index to be ready
     }
 
     protected function tearDown(): void
