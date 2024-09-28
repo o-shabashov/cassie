@@ -21,7 +21,6 @@ class ShopifyAdminUser extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
         'cassie_access_token',
     ];
