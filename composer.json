@@ -47,6 +47,7 @@
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.6",
+        "laravel/telescope": "^5.2",
         "meilisearch/meilisearch-php": "^1.6",
         "php-http/guzzle7-adapter": "^1.0",
         "typesense/laravel-scout-typesense-driver": "^5.2"
