@@ -35,9 +35,9 @@ class CopyAdsToPagesCommand extends Command
 
     private function meilisearchInsert($bar, $chunk): void
     {
-        Artisan::call('scout:flush', ['model' => Meilisearch\Page::class]);
+        Artisan::call('scout:flush', ['model' => Meilisearch\MeilisearchPage::class]);
 
-        Meilisearch\Page::chunk($chunk, function (Collection $pages) use ($chunk, $bar) {
+        Meilisearch\MeilisearchPage::chunk($chunk, function (Collection $pages) use ($chunk, $bar) {
             [, $duration] = Benchmark::value(fn () => $pages->searchable());
             $bar->advance($chunk);
 
@@ -47,9 +47,9 @@ class CopyAdsToPagesCommand extends Command
 
     private function typesenseInsert($bar, $chunk): void
     {
-        Artisan::call('scout:flush', ['model' => Typesense\Page::class]);
+        Artisan::call('scout:flush', ['model' => Typesense\TypesensePage::class]);
 
-        Typesense\Page::chunk($chunk, function (Collection $pages) use ($chunk, $bar) {
+        Typesense\TypesensePage::chunk($chunk, function (Collection $pages) use ($chunk, $bar) {
             [, $duration] = Benchmark::value(fn () => $pages->searchable());
             $bar->advance($chunk);
 

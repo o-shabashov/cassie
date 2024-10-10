@@ -2,28 +2,28 @@
 
 namespace Tests\Feature\Typesense;
 
-use App\Models\Typesense;
+use App\Models\Typesense\TypesenseProduct;
 use Tests\TypesensePageSearchTestCase;
 
 class ProductTest extends TypesensePageSearchTestCase
 {
     public function testCustomStructureIsSearchable(): void
     {
-        $this->assertEquals('yoda', Typesense\Product::search('tease')->get()->first()->title);
-        $this->assertEquals('anakin', Typesense\Product::search('rabbi')->get()->first()->title);
-        $this->assertEquals('dart', Typesense\Product::search('red')->get()->first()->title);
-        $this->assertEquals('dart', Typesense\Product::search('bla')->get()->first()->title);
-        $this->assertEquals('dart', Typesense\Product::search('kill')->get()->first()->title);
+        $this->assertEquals('yoda', TypesenseProduct::search('tease')->get()->first()->title);
+        $this->assertEquals('anakin', TypesenseProduct::search('rabbi')->get()->first()->title);
+        $this->assertEquals('dart', TypesenseProduct::search('red')->get()->first()->title);
+        $this->assertEquals('dart', TypesenseProduct::search('bla')->get()->first()->title);
+        $this->assertEquals('dart', TypesenseProduct::search('kill')->get()->first()->title);
     }
 
     public function testKeyNameIsNotSearchable(): void
     {
-        $this->assertNull(Typesense\Product::search('suit')->get()->first());
+        $this->assertNull(TypesenseProduct::search('suit')->get()->first());
     }
 
     public function testSubstringIsSearchable(): void
     {
-        $searchResult = Typesense\Product::search('rabb')->get();
+        $searchResult = TypesenseProduct::search('rabb')->get();
 
         $this->assertNotNull($searchResult);
         $this->assertEquals('anakin', $searchResult->first()->title);
@@ -31,7 +31,7 @@ class ProductTest extends TypesensePageSearchTestCase
 
     public function testSubstringInTitleIsSearchable(): void
     {
-        $searchResult = Typesense\Product::search('dar')->get();
+        $searchResult = TypesenseProduct::search('dar')->get();
 
         $this->assertNotNull($searchResult);
         $this->assertEquals('dart', $searchResult->first()->title);
@@ -39,8 +39,8 @@ class ProductTest extends TypesensePageSearchTestCase
 
     public function testTitleHasPriorityOverSections(): void
     {
-        $this->assertEquals('anakin young', Typesense\Product::search('anakin you')->get()->first()->title);
-        $this->assertEquals('anakin', Typesense\Product::search('anakin')->get()->first()->title);
-        $this->assertEquals('yoda', Typesense\Product::search('yoda')->get()->first()->title);
+        $this->assertEquals('anakin young', TypesenseProduct::search('anakin you')->get()->first()->title);
+        $this->assertEquals('anakin', TypesenseProduct::search('anakin')->get()->first()->title);
+        $this->assertEquals('yoda', TypesenseProduct::search('yoda')->get()->first()->title);
     }
 }

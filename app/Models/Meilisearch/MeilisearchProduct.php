@@ -6,7 +6,7 @@ use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
 
-class Product extends \App\Models\Product
+class MeilisearchProduct extends \App\Models\Product
 {
     use Searchable;
 

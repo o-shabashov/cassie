@@ -10,13 +10,13 @@ abstract class TypesensePageSearchTestCase extends PageSearchTestCase
     {
         parent::setUp();
 
-        Typesense\Page::all()->searchable();
+        Typesense\TypesensePage::all()->searchable();
         sleep(1); // Waiting for the index to be ready
     }
 
     protected function tearDown(): void
     {
-        $this->artisan('scout:flush', ['model' => Typesense\Page::class]);
+        $this->artisan('scout:flush', ['model' => Typesense\TypesensePage::class]);
 
         parent::tearDown();
     }

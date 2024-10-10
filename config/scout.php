@@ -130,7 +130,7 @@ return [
          * @see https://www.meilisearch.com/docs/reference/api/settings
          */
         'index-settings' => [
-            \App\Models\Meilisearch\Page::class => [
+            \App\Models\Meilisearch\MeilisearchPage::class => [
                 'filterableAttributes' => ['id', 'title', 'url', 'sections'],
                 'sortableAttributes'   => ['created_at'],
             ],

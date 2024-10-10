@@ -2,15 +2,15 @@
 
 namespace App\Models\Typesense;
 
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
 use Typesense\LaravelTypesense\Interfaces\TypesenseDocument;
 
-class Page extends \App\Models\Page implements TypesenseDocument
+class TypesenseProduct extends \App\Models\Product implements TypesenseDocument
 {
-    use Searchable;
+    use Searchable, HasFactory;
 
     public function searchableUsing(): Engine
     {
@@ -23,7 +23,7 @@ class Page extends \App\Models\Page implements TypesenseDocument
             'id'         => (string) $this->id,
             'title'      => $this->title,
             'url'        => $this->url,
-            'sections'   => implode(' ', Arr::flatten($this->sections)),
+            'fields'     => $this->fields,
             'created_at' => $this->created_at->timestamp,
         ];
     }
@@ -31,31 +31,25 @@ class Page extends \App\Models\Page implements TypesenseDocument
     public function getCollectionSchema(): array
     {
         return [
-            'name'   => $this->searchableAs(),
-            'fields' => [
+            'name'                  => $this->searchableAs(),
+            'enable_nested_fields'  => true,
+            'default_sorting_field' => 'created_at',
+            'token_separators'      => [':', '/', '.'],
+            'fields'                => [
                 [
-                    'name' => 'title',
-                    'type' => 'string',
-                ],
-                [
-                    'name' => 'url',
-                    'type' => 'string',
-                ],
-                [
-                    'name' => 'sections',
-                    'type' => 'string',
+                    'name' => '.*',
+                    'type' => 'auto',
                 ],
                 [
                     'name' => 'created_at',
                     'type' => 'int64',
                 ],
                 [
-                    'name'     => '__soft_deleted',
-                    'type'     => 'int32',
-                    'optional' => true,
+                    'name'  => '.*_facet',
+                    'type'  => 'auto',
+                    'facet' => true,
                 ],
             ],
-            'default_sorting_field' => 'created_at',
         ];
     }
 
@@ -63,7 +57,7 @@ class Page extends \App\Models\Page implements TypesenseDocument
     {
         return [
             'title',
-            'sections',
+            'fields',
         ];
     }
 }

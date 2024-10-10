@@ -41,12 +41,12 @@ class DoFullReindexJob extends BaseCassieHighQueueJob
             // TODO flush and reindex in different queues - high for main and low for the backup
 
             // 2. Send all products to the main search engine
-            Artisan::call('scout:flush', ['model' => Meilisearch\Product::class]);
-            Artisan::call('scout:flush', ['model' => Typesense\Product::class]);
+            Artisan::call('scout:flush', ['model' => Meilisearch\MeilisearchProduct::class]);
+            Artisan::call('scout:flush', ['model' => Typesense\TypesenseProduct::class]);
 
             // 3. Send all products to the backup search engine
-            Meilisearch\Product::all()->searchable();
-            Typesense\Product::all()->searchable();
+            Meilisearch\MeilisearchProduct::all()->searchable();
+            Typesense\TypesenseProduct::all()->searchable();
         } catch (Exception $e) {
             if ($e instanceof ShopifyProductException) {
                 $error = data_get($$e->response->getDecodedBody(), 'errors');

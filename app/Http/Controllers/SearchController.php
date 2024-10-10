@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meilisearch;
-use App\Models\Pgsql;
-use App\Models\Typesense;
+use App\Models\Meilisearch\MeilisearchPage;
+use App\Models\Meilisearch\MeilisearchProduct;
+use App\Models\Pgsql\PgsqlPage;
+use App\Models\Pgsql\PgsqlProduct;
+use App\Models\Typesense\TypesensePage;
+use App\Models\Typesense\TypesenseProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,15 +22,15 @@ class SearchController extends Controller
 
         $results = match ($type) {
             'page' => match ($settings->search_engine) {
-                'typesense'   => Typesense\Page::search($query)->get(),
-                'meilisearch' => Meilisearch\Page::search($query)->get(),
-                default       => Pgsql\PgsqlPage::search($query)->get(),
+                'typesense'   => TypesensePage::search($query)->get(),
+                'meilisearch' => MeilisearchPage::search($query)->get(),
+                default       => PgsqlPage::search($query)->get(),
             },
 
             'product' => match ($settings->search_engine) {
-                'typesense'   => Typesense\Product::search($query)->get(),
-                'meilisearch' => Meilisearch\Product::search($query)->get(),
-                default       => Pgsql\PgsqlProduct::search($query)->get(),
+                'typesense'   => TypesenseProduct::search($query)->get(),
+                'meilisearch' => MeilisearchProduct::search($query)->get(),
+                default       => PgsqlProduct::search($query)->get(),
             },
         };
 
