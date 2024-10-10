@@ -21,13 +21,13 @@ class SearchController extends Controller
             'page' => match ($settings->search_engine) {
                 'typesense'   => Typesense\Page::search($query)->get(),
                 'meilisearch' => Meilisearch\Page::search($query)->get(),
-                default       => Pgsql\Page::search($query)->get(),
+                default       => Pgsql\PgsqlPage::search($query)->get(),
             },
 
             'product' => match ($settings->search_engine) {
                 'typesense'   => Typesense\Product::search($query)->get(),
                 'meilisearch' => Meilisearch\Product::search($query)->get(),
-                default       => Pgsql\Product::search($query)->get(),
+                default       => Pgsql\PgsqlProduct::search($query)->get(),
             },
         };
 

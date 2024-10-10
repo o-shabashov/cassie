@@ -5,7 +5,10 @@ namespace App\Models\Pgsql;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class Product extends \App\Models\Product
+/**
+ * @inheritdoc
+ */
+class PgsqlPage extends \App\Models\Page
 {
     public static function search($query = ''): Builder
     {

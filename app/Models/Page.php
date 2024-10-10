@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property string $title
+ * @property string $url
+ * @property array $sections
+ */
 class Page extends Model
 {
     use HasFactory, SoftDeletes;
@@ -19,6 +24,4 @@ class Page extends Model
     protected $casts = [
         'sections' => 'array',
     ];
-
-    protected $hidden;
 }
