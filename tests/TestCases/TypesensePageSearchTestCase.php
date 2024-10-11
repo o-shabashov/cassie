@@ -2,7 +2,7 @@
 
 namespace Tests\TestCases;
 
-use App\Models\Typesense;
+use App\Models\Typesense\TypesensePage;
 
 abstract class TypesensePageSearchTestCase extends PageSearchTestCase
 {
@@ -10,13 +10,13 @@ abstract class TypesensePageSearchTestCase extends PageSearchTestCase
     {
         parent::setUp();
 
-        Typesense\TypesensePage::all()->searchable();
+        TypesensePage::all()->searchable();
         sleep(1); // Waiting for the index to be ready
     }
 
     protected function tearDown(): void
     {
-        $this->artisan('scout:flush', ['model' => Typesense\TypesensePage::class]);
+        $this->artisan('scout:flush', ['model' => TypesensePage::class]);
 
         parent::tearDown();
     }
