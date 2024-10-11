@@ -34,11 +34,18 @@ class TypesenseProduct extends \App\Models\Product implements TypesenseDocument
             'name'                  => $this->searchableAs(),
             'enable_nested_fields'  => true,
             'default_sorting_field' => 'created_at',
+            'search-parameters'     => [
+                'query_by' => 'title, fields.description',
+            ],
             'token_separators'      => [':', '/', '.'],
             'fields'                => [
                 [
                     'name' => '.*',
                     'type' => 'auto',
+                ],
+                [
+                    'name' => 'title',
+                    'type' => 'string',
                 ],
                 [
                     'name' => 'created_at',

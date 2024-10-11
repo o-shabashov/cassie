@@ -5,10 +5,10 @@ namespace Tests\Feature\ShopifyApi;
 use App\GraphQL\ShopifyProduct;
 use App\Models\User;
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
+use Illuminate\Foundation\Testing\TestCase;
 use JetBrains\PhpStorm\NoReturn;
-use Tests\TestCases\PageSearchTestCase;
 
-class GraphQLRequestsTest extends PageSearchTestCase
+class GraphQLRequestsTest extends TestCase
 {
     #[NoReturn]
     public function testBasic()

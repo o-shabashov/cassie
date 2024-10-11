@@ -3,10 +3,51 @@
 namespace Tests\Feature\Meilisearch;
 
 use App\Models\Meilisearch\MeilisearchPage;
-use Tests\TestCases\MeilisearchPageSearchTestCase;
+use App\Models\Page;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\TestCase;
 
-class PageTest extends MeilisearchPageSearchTestCase
+class PageTest extends TestCase
 {
+    use DatabaseTransactions;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Page::factory()->createMany([
+            [
+                'title'    => 'yoda',
+                'sections' => ['property' => 'fake me', 'value' => 'tease'],
+            ],
+            [
+                'title'    => 'anakin',
+                'sections' => ['find me rabbit', 'should you tiger'],
+            ],
+            [
+                'title'    => 'dart',
+                'sections' => ['moll' => ['black', 'suit' => 'red'], 'gonna kill you'],
+            ],
+            [
+                'title'    => 'yoda master',
+                'sections' => ['property' => 'anakin', 'value' => 'touch me', 'anakin'],
+            ],
+            [
+                'title'    => 'anakin young',
+                'sections' => ['yoda', 'still yoda'],
+            ],
+        ]);
+        MeilisearchPage::all()->searchable();
+        sleep(1); // Waiting for the index to be ready
+    }
+
+    protected function tearDown(): void
+    {
+        $this->artisan('scout:flush', ['model' => MeilisearchPage::class]);
+
+        parent::tearDown();
+    }
+
     public function testCustomStructureIsSearchable(): void
     {
         $this->assertEquals('yoda', MeilisearchPage::search('tease')->get()->first()->title);

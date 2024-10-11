@@ -32,6 +32,7 @@ class TypesensePage extends \App\Models\Page implements TypesenseDocument
     {
         return [
             'name'   => $this->searchableAs(),
+            'default_sorting_field' => 'created_at',
             'fields' => [
                 [
                     'name' => 'title',
@@ -55,7 +56,6 @@ class TypesensePage extends \App\Models\Page implements TypesenseDocument
                     'optional' => true,
                 ],
             ],
-            'default_sorting_field' => 'created_at',
         ];
     }
 

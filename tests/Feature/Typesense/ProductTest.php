@@ -2,45 +2,68 @@
 
 namespace Tests\Feature\Typesense;
 
+use App\Models\Product;
 use App\Models\Typesense\TypesenseProduct;
-use Tests\TestCases\TypesenseProductSearchTestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\TestCase;
 
-class ProductTest extends TypesenseProductSearchTestCase
+class ProductTest extends TestCase
 {
-    public function testCustomStructureIsSearchable(): void
+    use DatabaseTransactions;
+
+    protected function setUp(): void
     {
-        $this->assertEquals('yoda', TypesenseProduct::search('tease')->get()->first()->title);
-        $this->assertEquals('anakin', TypesenseProduct::search('rabbi')->get()->first()->title);
-        $this->assertEquals('dart', TypesenseProduct::search('red')->get()->first()->title);
-        $this->assertEquals('dart', TypesenseProduct::search('bla')->get()->first()->title);
-        $this->assertEquals('dart', TypesenseProduct::search('kill')->get()->first()->title);
+        parent::setUp();
+
+        Product::factory()->createMany([
+            [
+                'title'    => 'yoda',
+                'fields'   => ['title' => 'fake me', 'description' => 'anakin force should you'],
+            ],
+            [
+                'title'    => 'dart',
+                'fields' => ['description' => 'blacked suit red, gonna kill you'],
+            ],
+            [
+                'title'    => 'anakin young',
+                'fields'   => ['description' => 'yoda still yoda'],
+            ],
+            [
+                'title'    => 'me',
+            ],
+        ]);
+
+
+        TypesenseProduct::all()->searchable();
+        sleep(1); // Waiting for the index to be ready
     }
 
-    public function testKeyNameIsNotSearchable(): void
+    protected function tearDown(): void
     {
-        $this->assertNull(TypesenseProduct::search('suit')->get()->first());
-    }
+        $this->artisan('scout:flush', ['model' => TypesenseProduct::class]);
 
-    public function testSubstringIsSearchable(): void
-    {
-        $searchResult = TypesenseProduct::search('rabb')->get();
-
-        $this->assertNotNull($searchResult);
-        $this->assertEquals('anakin', $searchResult->first()->title);
+        parent::tearDown();
     }
 
     public function testSubstringInTitleIsSearchable(): void
     {
-        $searchResult = TypesenseProduct::search('dar')->get();
+        $searchResult = TypesenseProduct::search('ana')->get();
+
+        $this->assertNotNull($searchResult);
+        $this->assertEquals('anakin young', $searchResult->first()->title);
+    }
+
+    public function testSubstringInDescriptionIsSearchable(): void
+    {
+        $searchResult = TypesenseProduct::search('blac')->get();
 
         $this->assertNotNull($searchResult);
         $this->assertEquals('dart', $searchResult->first()->title);
     }
 
-    public function testTitleHasPriorityOverSections(): void
+    public function testTitleHasPriorityOverFields(): void
     {
-        $this->assertEquals('anakin young', TypesenseProduct::search('anakin you')->get()->first()->title);
-        $this->assertEquals('anakin', TypesenseProduct::search('anakin')->get()->first()->title);
+        $this->assertEquals('me', TypesenseProduct::search('me')->get()->first()->title);
         $this->assertEquals('yoda', TypesenseProduct::search('yoda')->get()->first()->title);
     }
 }
