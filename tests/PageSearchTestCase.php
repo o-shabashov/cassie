@@ -8,7 +8,6 @@ use Illuminate\Foundation\Testing\TestCase;
 
 abstract class PageSearchTestCase extends TestCase
 {
-    use CreatesApplication;
     use DatabaseTransactions;
 
     protected function setUp(): void

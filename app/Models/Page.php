@@ -15,6 +15,8 @@ class Page extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'pages';
+
     protected $fillable = [
         'title',
         'url',
