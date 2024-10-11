@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Tests\TestCases;
 
-use App\Models;
+use App\Models\Page;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase;
 
@@ -14,7 +14,7 @@ abstract class PageSearchTestCase extends TestCase
     {
         parent::setUp();
 
-        Models\Page::factory()->createMany([
+        Page::factory()->createMany([
             [
                 'title'    => 'yoda',
                 'sections' => ['property' => 'fake me', 'value' => 'tease'],

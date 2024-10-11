@@ -3,7 +3,7 @@
 namespace Tests\Feature\Meilisearch;
 
 use App\Models\Meilisearch\MeilisearchPage;
-use Tests\MeilisearchPageSearchTestCase;
+use Tests\TestCases\MeilisearchPageSearchTestCase;
 
 class PageTest extends MeilisearchPageSearchTestCase
 {

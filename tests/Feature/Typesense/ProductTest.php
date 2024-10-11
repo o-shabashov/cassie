@@ -3,7 +3,7 @@
 namespace Tests\Feature\Typesense;
 
 use App\Models\Typesense\TypesenseProduct;
-use Tests\TypesensePageSearchTestCase;
+use Tests\TestCases\TypesensePageSearchTestCase;
 
 class ProductTest extends TypesensePageSearchTestCase
 {

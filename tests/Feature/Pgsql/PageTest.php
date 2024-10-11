@@ -3,7 +3,7 @@
 namespace Tests\Feature\Pgsql;
 
 use App\Models\Pgsql\PgsqlPage;
-use Tests\PageSearchTestCase;
+use Tests\TestCases\PageSearchTestCase;
 
 class PageTest extends PageSearchTestCase
 {

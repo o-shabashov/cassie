@@ -14,21 +14,23 @@ class ProductFactory extends Factory
 
     public function definition(): array
     {
+        $title = $this->faker->sentence;
+
         return [
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'title'      => $this->faker->word(),
-            'fields'     => $this->generateFields(),
+            'title'      => $title,
+            'fields'     => $this->generateFields(title: $title),
             'url'        => $this->faker->url(),
         ];
     }
 
-    private function generateFields(): array
+    private function generateFields(string $title): array
     {
         return [
             'id'            => 'gid://shopify/Product/'.$this->faker->randomNumber(13),
             'tags'          => $this->faker->words(3, true),
-            'title'         => $this->faker->sentence,
+            'title'         => $title,
             'options'       => $this->generateOptions(),
             'metafields'    => $this->generateMetafields(),
             'handle'        => $this->faker->slug,

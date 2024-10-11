@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\TestCases;
 
 use App\Models\Typesense;
 
