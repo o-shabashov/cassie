@@ -3,9 +3,9 @@
 namespace Tests\Feature\Typesense;
 
 use App\Models\Typesense\TypesenseProduct;
-use Tests\TestCases\TypesensePageSearchTestCase;
+use Tests\TestCases\TypesenseProductSearchTestCase;
 
-class ProductTest extends TypesensePageSearchTestCase
+class ProductTest extends TypesenseProductSearchTestCase
 {
     public function testCustomStructureIsSearchable(): void
     {
