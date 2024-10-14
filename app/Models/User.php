@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserPlatforms;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,6 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|Carbon $created_at
  * @property string|Carbon $updated_at
  * @property string $shopify_access_token
+ * @property UserPlatforms $platform
  */
 class User extends Authenticatable
 {
@@ -34,4 +36,14 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
     ];
+
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'platform' => UserPlatforms::class,
+        ];
+    }
 }

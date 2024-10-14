@@ -4,6 +4,7 @@ namespace Tests\Feature\Meilisearch;
 
 use App\Models\Meilisearch\MeilisearchProduct;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase;
 use Meilisearch\Client;
@@ -16,10 +17,11 @@ class ProductTest extends TestCase
     {
         parent::setUp();
 
+        $this->actingAs(User::factory()->create());
+
         $client = new Client(config('scout.meilisearch.host'));
-        $client->index('products')->updateSettings(
-            config('scout.meilisearch.index-settings.'.MeilisearchProduct::class)
-        );
+        $client->index((new MeilisearchProduct)->searchableAs())
+               ->updateSettings(config('scout.meilisearch.index-settings.'.MeilisearchProduct::class));
 
         Product::factory()->createMany([
             [
@@ -46,7 +48,8 @@ class ProductTest extends TestCase
 
     protected function tearDown(): void
     {
-        $this->artisan('scout:flush', ['model' => MeilisearchProduct::class]);
+        $client = new Client(config('scout.meilisearch.host'));
+        $client->deleteIndex((new MeilisearchProduct)->searchableAs());
 
         parent::tearDown();
     }

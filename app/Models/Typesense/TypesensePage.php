@@ -2,6 +2,7 @@
 
 namespace App\Models\Typesense;
 
+use App\Auth;
 use Illuminate\Support\Arr;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
@@ -65,5 +66,10 @@ class TypesensePage extends \App\Models\Page implements TypesenseDocument
             'title',
             'sections',
         ];
+    }
+
+    public function searchableAs(): string
+    {
+        return sprintf('%s_%s_%s', $this->table, Auth::user()->platform->name, Auth::user()->id);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Auth;
 use App\Models\Meilisearch\MeilisearchPage;
 use App\Models\Meilisearch\MeilisearchProduct;
 use App\Models\Pgsql\PgsqlPage;
@@ -9,7 +10,6 @@ use App\Models\Pgsql\PgsqlProduct;
 use App\Models\Typesense\TypesensePage;
 use App\Models\Typesense\TypesenseProduct;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {

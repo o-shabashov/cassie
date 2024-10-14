@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserPlatforms;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -21,6 +22,7 @@ class UserFactory extends Factory
         return [
             'name'              => fake()->name(),
             'remember_token'    => Str::random(10),
+            'platform'          => UserPlatforms::shopify
         ];
     }
 }

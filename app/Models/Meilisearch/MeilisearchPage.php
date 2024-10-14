@@ -2,6 +2,7 @@
 
 namespace App\Models\Meilisearch;
 
+use App\Auth;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
@@ -24,5 +25,10 @@ class MeilisearchPage extends \App\Models\Page
             'sections'   => $this->sections,
             'created_at' => $this->created_at,
         ];
+    }
+
+    public function searchableAs(): string
+    {
+        return sprintf('%s_%s_%s', $this->table, Auth::user()->platform->name, Auth::user()->id);
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature\Typesense;
 
 use App\Models\Product;
 use App\Models\Typesense\TypesenseProduct;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase;
 
@@ -14,6 +15,8 @@ class ProductTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->actingAs(User::factory()->create());
 
         Product::factory()->createMany([
             [
