@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Meilisearch\MeilisearchPage;
+use App\Models\Meilisearch\MeilisearchProduct;
+
 return [
 
     /*
@@ -130,9 +133,13 @@ return [
          * @see https://www.meilisearch.com/docs/reference/api/settings
          */
         'index-settings' => [
-            \App\Models\Meilisearch\MeilisearchPage::class => [
+            MeilisearchPage::class => [
                 'filterableAttributes' => ['id', 'title', 'url', 'sections'],
-                'sortableAttributes'   => ['created_at'],
+                'sortableAttributes'   => ['id', 'created_at'],
+            ],
+            MeilisearchProduct::class => [
+                'filterableAttributes' => ['id', 'title', 'url', 'fields'],
+                'sortableAttributes'   => ['id', 'created_at'],
             ],
         ],
     ],
