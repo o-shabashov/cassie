@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\UserPlatforms;
+use Illuminate\Database\Eloquent\Casts\ArrayObject;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,13 +12,14 @@ use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @property int    $id
- * @property string $name
- * @property string $remember_token
+ * @property int           $id
+ * @property string        $name
+ * @property string        $remember_token
  * @property string|Carbon $created_at
  * @property string|Carbon $updated_at
- * @property string $shopify_access_token
+ * @property string        $shopify_access_token
  * @property UserPlatforms $platform
+ * @property ArrayObject   $settings
  */
 class User extends Authenticatable
 {
@@ -28,6 +31,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'shopify_access_token',
+        'platform',
+        'settings',
     ];
 
     /**
@@ -44,6 +49,7 @@ class User extends Authenticatable
     {
         return [
             'platform' => UserPlatforms::class,
+            'settings' => AsArrayObject::class,
         ];
     }
 }

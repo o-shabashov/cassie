@@ -13,8 +13,6 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
@@ -22,7 +20,8 @@ class UserFactory extends Factory
         return [
             'name'              => fake()->name(),
             'remember_token'    => Str::random(10),
-            'platform'          => UserPlatforms::shopify
+            'platform'          => UserPlatforms::shopify,
+            'settings'          => [],
         ];
     }
 }
