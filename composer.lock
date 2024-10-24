@@ -214,17 +214,21 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:o-shabashov/common.git",
-                "reference": "714360a8ecc5f11a85315623e791fbd1280a62e1"
+                "reference": "e91719c121df42201a0df2e391c466bb41e2ca00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o-shabashov/common/zipball/714360a8ecc5f11a85315623e791fbd1280a62e1",
-                "reference": "714360a8ecc5f11a85315623e791fbd1280a62e1",
+                "url": "https://api.github.com/repos/o-shabashov/common/zipball/e91719c121df42201a0df2e391c466bb41e2ca00",
+                "reference": "e91719c121df42201a0df2e391c466bb41e2ca00",
                 "shasum": ""
             },
             "require": {
+                "emreyarligan/enum-concern": "^1.0",
                 "php": "^8.3",
                 "wendelladriel/laravel-validated-dto": "^3.8"
+            },
+            "require-dev": {
+                "pestphp/pest": "^3.5"
             },
             "default-branch": true,
             "type": "library",
@@ -237,7 +241,7 @@
                 "source": "https://github.com/o-shabashov/common/tree/main",
                 "issues": "https://github.com/o-shabashov/common/issues"
             },
-            "time": "2024-10-14T07:05:11+00:00"
+            "time": "2024-10-24T02:24:18+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -675,6 +679,56 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "emreyarligan/enum-concern",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emreyarligan/enum-concern.git",
+                "reference": "388d1865536adc2104dc80083289b82108c768fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emreyarligan/enum-concern/zipball/388d1865536adc2104dc80083289b82108c768fc",
+                "reference": "388d1865536adc2104dc80083289b82108c768fc",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/collections": "^8.65 || ^9.0 || ^10.0 || ^11.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EmreYarligan\\EnumConcern\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emre Yarlıgan"
+                }
+            ],
+            "description": "A PHP package for effortless Enumeration handling with Laravel Collections 📦 ✨",
+            "homepage": "https://github.com/emreyarligan/enum-concern",
+            "keywords": [
+                "concern",
+                "enum",
+                "enumeration",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/emreyarligan/enum-concern/issues",
+                "source": "https://github.com/emreyarligan/enum-concern/tree/1.0.4"
+            },
+            "time": "2024-04-06T00:19:16+00:00"
         },
         {
             "name": "fruitcake/php-cors",
