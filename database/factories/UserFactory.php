@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Enums\SearchEngines;
 use App\Enums\UserPlatforms;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -21,7 +23,8 @@ class UserFactory extends Factory
             'name'              => fake()->name(),
             'remember_token'    => Str::random(10),
             'platform'          => UserPlatforms::shopify,
-            'settings'          => [],
+            'settings'          => User::generateSettings(),
+            'current_engine'    => Arr::random(SearchEngines::active()),
         ];
     }
 }
