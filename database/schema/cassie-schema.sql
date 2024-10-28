@@ -2,12 +2,13 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.6 (Debian 15.6-1.pgdg120+2)
--- Dumped by pg_dump version 15.6 (Ubuntu 15.6-1.pgdg22.04+1)
+-- Dumped from database version 17.0 (Debian 17.0-1.pgdg120+1)
+-- Dumped by pg_dump version 17.0 (Ubuntu 17.0-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -100,41 +101,6 @@ ALTER SEQUENCE public.migrations_id_seq OWNED BY public.migrations.id;
 
 
 --
--- Name: pages; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.pages (
-    id bigint NOT NULL,
-    title text NOT NULL,
-    sections jsonb NOT NULL,
-    url character varying(255) NOT NULL,
-    deleted_at timestamp(0) without time zone,
-    created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone,
-    searchable tsvector GENERATED ALWAYS AS (jsonb_to_tsvector('english'::regconfig, sections, '["all"]'::jsonb)) STORED
-);
-
-
---
--- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.pages_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.pages_id_seq OWNED BY public.pages.id;
-
-
---
 -- Name: password_reset_tokens; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -183,18 +149,74 @@ ALTER SEQUENCE public.personal_access_tokens_id_seq OWNED BY public.personal_acc
 
 
 --
+-- Name: telescope_entries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.telescope_entries (
+    sequence bigint NOT NULL,
+    uuid uuid NOT NULL,
+    batch_id uuid NOT NULL,
+    family_hash character varying(255),
+    should_display_on_index boolean DEFAULT true NOT NULL,
+    type character varying(20) NOT NULL,
+    content text NOT NULL,
+    created_at timestamp(0) without time zone
+);
+
+
+--
+-- Name: telescope_entries_sequence_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.telescope_entries_sequence_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: telescope_entries_sequence_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.telescope_entries_sequence_seq OWNED BY public.telescope_entries.sequence;
+
+
+--
+-- Name: telescope_entries_tags; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.telescope_entries_tags (
+    entry_uuid uuid NOT NULL,
+    tag character varying(255) NOT NULL
+);
+
+
+--
+-- Name: telescope_monitoring; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.telescope_monitoring (
+    tag character varying(255) NOT NULL
+);
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
     name character varying(255) NOT NULL,
-    email character varying(255) NOT NULL,
-    email_verified_at timestamp(0) without time zone,
-    password character varying(255) NOT NULL,
     remember_token character varying(100),
     created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone
+    updated_at timestamp(0) without time zone,
+    shopify_access_token character varying(255),
+    platform character varying(255) DEFAULT 'shopify'::character varying NOT NULL,
+    settings jsonb DEFAULT '{}'::jsonb NOT NULL,
+    current_engine character varying(255) DEFAULT 'typesense'::character varying NOT NULL,
+    CONSTRAINT users_platform_check CHECK (((platform)::text = 'shopify'::text))
 );
 
 
@@ -232,17 +254,17 @@ ALTER TABLE ONLY public.migrations ALTER COLUMN id SET DEFAULT nextval('public.m
 
 
 --
--- Name: pages id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pages ALTER COLUMN id SET DEFAULT nextval('public.pages_id_seq'::regclass);
-
-
---
 -- Name: personal_access_tokens id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.personal_access_tokens ALTER COLUMN id SET DEFAULT nextval('public.personal_access_tokens_id_seq'::regclass);
+
+
+--
+-- Name: telescope_entries sequence; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.telescope_entries ALTER COLUMN sequence SET DEFAULT nextval('public.telescope_entries_sequence_seq'::regclass);
 
 
 --
@@ -277,14 +299,6 @@ ALTER TABLE ONLY public.migrations
 
 
 --
--- Name: pages pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.pages
-    ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
-
-
---
 -- Name: password_reset_tokens password_reset_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -309,11 +323,35 @@ ALTER TABLE ONLY public.personal_access_tokens
 
 
 --
--- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: telescope_entries telescope_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_email_unique UNIQUE (email);
+ALTER TABLE ONLY public.telescope_entries
+    ADD CONSTRAINT telescope_entries_pkey PRIMARY KEY (sequence);
+
+
+--
+-- Name: telescope_entries_tags telescope_entries_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.telescope_entries_tags
+    ADD CONSTRAINT telescope_entries_tags_pkey PRIMARY KEY (entry_uuid, tag);
+
+
+--
+-- Name: telescope_entries telescope_entries_uuid_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.telescope_entries
+    ADD CONSTRAINT telescope_entries_uuid_unique UNIQUE (uuid);
+
+
+--
+-- Name: telescope_monitoring telescope_monitoring_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.telescope_monitoring
+    ADD CONSTRAINT telescope_monitoring_pkey PRIMARY KEY (tag);
 
 
 --
@@ -332,17 +370,46 @@ CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_index ON public.
 
 
 --
--- Name: posts_searchable_index; Type: INDEX; Schema: public; Owner: -
+-- Name: telescope_entries_batch_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX pages_searchable_index ON public.pages USING gin (searchable);
+CREATE INDEX telescope_entries_batch_id_index ON public.telescope_entries USING btree (batch_id);
 
 
 --
--- Name: titles_trgm_index; Type: INDEX; Schema: public; Owner: -
+-- Name: telescope_entries_created_at_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX titles_trgm_index ON public.pages USING gin (title public.gin_trgm_ops);
+CREATE INDEX telescope_entries_created_at_index ON public.telescope_entries USING btree (created_at);
+
+
+--
+-- Name: telescope_entries_family_hash_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX telescope_entries_family_hash_index ON public.telescope_entries USING btree (family_hash);
+
+
+--
+-- Name: telescope_entries_tags_tag_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX telescope_entries_tags_tag_index ON public.telescope_entries_tags USING btree (tag);
+
+
+--
+-- Name: telescope_entries_type_should_display_on_index_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX telescope_entries_type_should_display_on_index_index ON public.telescope_entries USING btree (type, should_display_on_index);
+
+
+--
+-- Name: telescope_entries_tags telescope_entries_tags_entry_uuid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.telescope_entries_tags
+    ADD CONSTRAINT telescope_entries_tags_entry_uuid_foreign FOREIGN KEY (entry_uuid) REFERENCES public.telescope_entries(uuid) ON DELETE CASCADE;
 
 
 --
@@ -353,12 +420,13 @@ CREATE INDEX titles_trgm_index ON public.pages USING gin (title public.gin_trgm_
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.6 (Debian 15.6-1.pgdg120+2)
--- Dumped by pg_dump version 15.6 (Ubuntu 15.6-1.pgdg22.04+1)
+-- Dumped from database version 17.0 (Debian 17.0-1.pgdg120+1)
+-- Dumped by pg_dump version 17.0 (Ubuntu 17.0-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -374,9 +442,14 @@ SET row_security = off;
 COPY public.migrations (id, migration, batch) FROM stdin;
 1	2014_10_12_000000_create_users_table	1
 2	2014_10_12_100000_create_password_reset_tokens_table	1
-3	2019_08_19_000000_create_failed_jobs_table	1
-4	2019_12_14_000001_create_personal_access_tokens_table	1
-5	2024_01_03_114921_create_pages_table	1
+3	2018_08_08_100000_create_telescope_entries_table	1
+4	2019_08_19_000000_create_failed_jobs_table	1
+5	2019_12_14_000001_create_personal_access_tokens_table	1
+9	2024_09_16_090706_add_shopify_access_token_to_users	1
+10	2024_09_19_022124_drop_user_email_password	1
+13	2024_10_14_065634_add_user_platform	3
+14	2024_10_23_133728_add_user_settings_json_column	4
+15	2024_10_25_043215_add_user_current_engine_column	5
 \.
 
 
@@ -384,9 +457,10 @@ COPY public.migrations (id, migration, batch) FROM stdin;
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.migrations_id_seq', 5, true);
+SELECT pg_catalog.setval('public.migrations_id_seq', 15, true);
 
 
 --
 -- PostgreSQL database dump complete
 --
+
