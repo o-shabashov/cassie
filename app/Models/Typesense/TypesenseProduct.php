@@ -3,6 +3,7 @@
 namespace App\Models\Typesense;
 
 use App\Auth;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
@@ -11,7 +12,7 @@ use Typesense\LaravelTypesense\Interfaces\TypesenseDocument;
 
 class TypesenseProduct extends \App\Models\Product implements TypesenseDocument
 {
-    use Searchable, HasFactory;
+    use HasFactory, Searchable;
 
     public function searchableUsing(): Engine
     {
@@ -38,8 +39,8 @@ class TypesenseProduct extends \App\Models\Product implements TypesenseDocument
             'search-parameters'     => [
                 'query_by' => 'title, fields.description',
             ],
-            'token_separators'      => [':', '/', '.'],
-            'fields'                => [
+            'token_separators' => [':', '/', '.'],
+            'fields'           => [
                 [
                     'name' => '.*',
                     'type' => 'auto',
@@ -69,8 +70,8 @@ class TypesenseProduct extends \App\Models\Product implements TypesenseDocument
         ];
     }
 
-    public function searchableAs(): string
+    public function searchableAs(?User $user = null): string
     {
-        return sprintf('%s_%s_%s', $this->table, Auth::user()->platform->name, Auth::user()->id);
+        return sprintf('products_%s', Auth::user() ? Auth::user()->id : $user->id);
     }
 }

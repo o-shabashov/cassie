@@ -12,7 +12,7 @@ class UserTest extends TestCase
 
     public function testUserSettingsCastedCorrectly(): void
     {
-        $user = new User();
+        $user = new User;
 
         // Fix ErrorException: Indirect modification of overloaded property App\Models\User::$settings has no effect
         $user->settings = [];
@@ -49,5 +49,39 @@ class UserTest extends TestCase
         );
         $this->assertEquals(['search_only_api_key' => 'key'], $user->settings['typesense']);
         $this->assertEquals(['host' => 'local'], $user->settings['meilisearch']);
+    }
+
+    public function testGenerateSettings()
+    {
+        $user = User::updateOrCreate(
+            ['name' => 'test'],
+            [
+                'shopify_access_token' => 'token',
+            ]
+        );
+
+        $user->settings = User::generateSettings($user);
+
+        $this->assertEquals(
+            [
+                'search_only_api_key' => 'key',
+                'host'                => 'typesense',
+                'port'                => '8108',
+                'path'                => '',
+                'protocol'            => 'http',
+                'products_index_name' => 'products_'.$user->id,
+                'api_key'             => 'key',
+            ],
+            $user->settings['typesense']
+        );
+        $this->assertEquals(
+            [
+                'host'                => 'http://meilisearch:7700',
+                'products_index_name' => 'products_'.$user->id,
+                'api_key'             => null,
+                'search_only_api_key' => 'key',
+            ],
+            $user->settings['meilisearch']
+        );
     }
 }

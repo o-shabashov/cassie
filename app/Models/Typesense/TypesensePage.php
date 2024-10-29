@@ -3,6 +3,7 @@
 namespace App\Models\Typesense;
 
 use App\Auth;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
@@ -32,9 +33,9 @@ class TypesensePage extends \App\Models\Page implements TypesenseDocument
     public function getCollectionSchema(): array
     {
         return [
-            'name'   => $this->searchableAs(),
+            'name'                  => $this->searchableAs(),
             'default_sorting_field' => 'created_at',
-            'fields' => [
+            'fields'                => [
                 [
                     'name' => 'title',
                     'type' => 'string',
@@ -68,8 +69,8 @@ class TypesensePage extends \App\Models\Page implements TypesenseDocument
         ];
     }
 
-    public function searchableAs(): string
+    public function searchableAs(?User $user = null): string
     {
-        return sprintf('%s_%s_%s', $this->table, Auth::user()->platform->name, Auth::user()->id);
+        return sprintf('pages_%s', Auth::user() ? Auth::user()->id : $user->id);
     }
 }

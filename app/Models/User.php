@@ -16,15 +16,15 @@ use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @property int           $id
- * @property string        $name
- * @property string        $remember_token
+ * @property int $id
+ * @property string $name
+ * @property string $remember_token
  * @property string|Carbon $created_at
  * @property string|Carbon $updated_at
- * @property string        $shopify_access_token
+ * @property string $shopify_access_token
  * @property UserPlatforms $platform
  * @property SearchEngines $current_engine
- * @property ArrayObject   $settings
+ * @property ArrayObject $settings
  */
 class User extends Authenticatable
 {
@@ -60,19 +60,19 @@ class User extends Authenticatable
         ];
     }
 
-    public static function generateSettings(): array
+    public static function generateSettings(?User $user = null): array
     {
         return [
             'meilisearch' => [
                 'host'                => config('scout.meilisearch.host'),
-                'products_index_name' => (new MeilisearchProduct)->searchableAs(),
+                'products_index_name' => (new MeilisearchProduct)->searchableAs($user),
                 'api_key'             => config('scout.meilisearch.key'), // FIXME should be user specific
                 'search_only_api_key' => 'key', // FIXME
             ],
-            'typesense'   => array_merge(
+            'typesense' => array_merge(
                 Arr::random(config('scout.typesense.nodes')),
                 [
-                    'products_index_name' => (new TypesenseProduct)->searchableAs(),
+                    'products_index_name' => (new TypesenseProduct)->searchableAs($user),
                     'api_key'             => 'key', // FIXME should be user specific
                     'search_only_api_key' => 'key', // FIXME
                 ],
