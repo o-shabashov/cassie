@@ -7,6 +7,7 @@ use App\GraphQL\ShopifyProduct;
 use App\Models\Meilisearch\MeilisearchProduct;
 use App\Models\Product;
 use App\Models\Typesense\TypesenseProduct;
+use App\Models\User;
 use Exception;
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
 use Illuminate\Support\Facades\Artisan;
@@ -18,13 +19,14 @@ class DoFullReindexJob extends BaseCassieHighQueueJob
     public function handle(): void
     {
         try {
-            $api = app(BasicShopifyAPI::class, ['shop' => $this->shopifyUserDto->name, 'accessToken' => $this->shopifyUserDto->password]);
+            $api  = app(BasicShopifyAPI::class, ['shop' => $this->shopifyUserDto->name, 'accessToken' => $this->shopifyUserDto->password]);
+            $user = User::find($this->shopifyUserDto->cassie_id);
 
             // TODO iterate over all products
             // 1. Insert all products to the database
             collect(data_get(ShopifyProduct::get($api), 'body.container.data.products.nodes'))
-                ->each(function ($product) {
-                    Product::updateOrCreate(
+                ->each(function ($product) use ($user) {
+                    Product::asTenant($user)->updateOrCreate(
                         [
                             'shopify_id' => (int) Str::remove('gid://shopify/Product/', $product['id']),
                         ],
@@ -40,6 +42,9 @@ class DoFullReindexJob extends BaseCassieHighQueueJob
 
             // TODO get user search engine settings
             // TODO flush and reindex in different queues - high for main and low for the backup
+            // Artisan::queue('mail:send', [
+            //     'user' => 1, '--queue' => 'default'
+            // ])->onConnection('redis')->onQueue('commands');
 
             // 2. Send all products to the main search engine
             Artisan::call('scout:flush', ['model' => MeilisearchProduct::class]);
