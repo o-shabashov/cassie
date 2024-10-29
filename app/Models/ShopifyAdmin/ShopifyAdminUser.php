@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ShopifyAdminUser extends Model
 {
     protected $connection = 'shopify_admin';
-    protected $table      = 'users';
+
+    protected $table = 'users';
 
     /**
      * @var array<int, string>

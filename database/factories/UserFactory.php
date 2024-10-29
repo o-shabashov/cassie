@@ -20,11 +20,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'              => fake()->name(),
-            'remember_token'    => Str::random(10),
-            'platform'          => UserPlatforms::shopify,
-            'settings'          => User::generateSettings(),
-            'current_engine'    => Arr::random(SearchEngines::active()),
+            'name'           => fake()->name(),
+            'remember_token' => Str::random(10),
+            'platform'       => UserPlatforms::shopify,
+            'settings'       => [],
+            'current_engine' => Arr::random(SearchEngines::active()),
         ];
     }
 }

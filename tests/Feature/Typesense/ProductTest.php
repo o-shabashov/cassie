@@ -20,22 +20,21 @@ class ProductTest extends TestCase
 
         Product::factory()->createMany([
             [
-                'title'    => 'yoda',
-                'fields'   => ['title' => 'fake me', 'description' => 'anakin force should you'],
+                'title'  => 'yoda',
+                'fields' => ['title' => 'fake me', 'description' => 'anakin force should you'],
             ],
             [
-                'title'    => 'dart',
+                'title'  => 'dart',
                 'fields' => ['description' => 'blacked suit red, gonna kill you'],
             ],
             [
-                'title'    => 'anakin young',
-                'fields'   => ['description' => 'yoda still yoda'],
+                'title'  => 'anakin young',
+                'fields' => ['description' => 'yoda still yoda'],
             ],
             [
-                'title'    => 'me',
+                'title' => 'me',
             ],
         ]);
-
 
         TypesenseProduct::all()->searchable();
         sleep(1); // Waiting for the index to be ready

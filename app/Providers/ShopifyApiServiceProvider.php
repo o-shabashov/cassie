@@ -15,7 +15,7 @@ class ShopifyApiServiceProvider extends ServiceProvider implements DeferrablePro
     public function register(): void
     {
         $this->app->singleton(BasicShopifyAPI::class, function (Application $app, array $params) {
-            $options = new Options();
+            $options = new Options;
             $options->setVersion(config('services.shopify.api_version'));
 
             $api = new BasicShopifyAPI($options);

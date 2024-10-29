@@ -21,7 +21,7 @@ class ProductTest extends TestCase
 
         $client = new Client(config('scout.meilisearch.host'));
         $client->index((new MeilisearchProduct)->searchableAs())
-               ->updateSettings(config('scout.meilisearch.index-settings.'.MeilisearchProduct::class));
+            ->updateSettings(config('scout.meilisearch.index-settings.'.MeilisearchProduct::class));
 
         Product::factory()->createMany([
             [
@@ -40,7 +40,6 @@ class ProductTest extends TestCase
                 'title' => 'me',
             ],
         ]);
-
 
         MeilisearchProduct::all()->searchable();
         sleep(1); // Waiting for the index to be ready

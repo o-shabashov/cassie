@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 /**
- * @inheritdoc
+ * {@inheritdoc}
  */
 class PgsqlPage extends \App\Models\Page
 {

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 /**
- * @inheritdoc
+ * {@inheritdoc}
  */
 class PgsqlProduct extends \App\Models\Product
 {

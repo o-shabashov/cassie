@@ -95,7 +95,7 @@ class ProductFactory extends Factory
                 'endCursor'   => base64_encode('{"last_id":49106668618016,"last_value":"3"}'),
                 'startCursor' => base64_encode('{"last_id":49106668618016,"last_value":"3"}'),
             ],
-            'nodes'    => $this->faker->unique()->randomElements([
+            'nodes' => $this->faker->unique()->randomElements([
                 [
                     'id' => 'gid://shopify/ProductVariant/'.$this->faker->randomNumber(5),
 
