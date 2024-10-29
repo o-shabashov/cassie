@@ -50,7 +50,7 @@ class DoFullReindexJob extends BaseCassieHighQueueJob
             TypesenseProduct::all()->searchable();
         } catch (Exception $e) {
             if ($e instanceof ShopifyProductException) {
-                $error = data_get($$e->response->getDecodedBody(), 'errors');
+                $error = data_get($e->response->getDecodedBody(), 'errors');
             } else {
                 $error = $e->getMessage();
             }
