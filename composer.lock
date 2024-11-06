@@ -214,12 +214,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:o-shabashov/common.git",
-                "reference": "e91719c121df42201a0df2e391c466bb41e2ca00"
+                "reference": "ba5cfeb037df4e7c7be2cb3b5f4d2bdcdc2bc925"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o-shabashov/common/zipball/e91719c121df42201a0df2e391c466bb41e2ca00",
-                "reference": "e91719c121df42201a0df2e391c466bb41e2ca00",
+                "url": "https://api.github.com/repos/o-shabashov/common/zipball/ba5cfeb037df4e7c7be2cb3b5f4d2bdcdc2bc925",
+                "reference": "ba5cfeb037df4e7c7be2cb3b5f4d2bdcdc2bc925",
                 "shasum": ""
             },
             "require": {
@@ -241,7 +241,7 @@
                 "source": "https://github.com/o-shabashov/common/tree/main",
                 "issues": "https://github.com/o-shabashov/common/issues"
             },
-            "time": "2024-10-24T02:24:18+00:00"
+            "time": "2024-11-06T05:07:10+00:00"
         },
         {
             "name": "clue/stream-filter",
