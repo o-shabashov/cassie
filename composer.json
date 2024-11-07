@@ -1,96 +1,96 @@
 {
-    "name": "cassie/cassie",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/o-shabashov/common"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
+  "name": "cassie/cassie",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/o-shabashov/common"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true
-        },
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "github-oauth": {
-            "github.com": "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"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": [
-            ]
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "require": {
-        "php": "^8.3",
-        "cassie/common": "dev-main",
-        "gnikyt/basic-shopify-api": "^11.0",
-        "guzzlehttp/guzzle": "^7.2",
-        "http-interop/http-factory-guzzle": "^1.2",
-        "laravel/framework": "^11.0",
-        "laravel/sanctum": "^4.0",
-        "laravel/scout": "^10.6",
-        "laravel/telescope": "^5.2",
-        "meilisearch/meilisearch-php": "^1.6",
-        "php-http/guzzle7-adapter": "^1.0",
-        "typesense/laravel-scout-typesense-driver": "^5.2"
-    },
-    "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "larastan/larastan": "^2.9",
-        "laravel/pail": "*",
-        "laravel/pint": "^1.16",
-        "laravel/sail": "^1.18",
-        "laravel/tinker": "*",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^10.1",
-        "spatie/laravel-ignition": "^2.0",
-        "tightenco/duster": "^3.0",
-        "worksome/envy": "^1.3"
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
-        "phpstan": [
-            "./vendor/bin/phpstan analyze --memory-limit=2G"
-        ],
-      "test": [
-        "php artisan migrate --env=testing",
-        "php artisan test"
-        ],
-      "dev": [
-        "Composer\\Config::disableProcessTimeout",
-        "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" --names=server,queue,logs"
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "github-oauth": {
+      "github.com": "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"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": [
       ]
-    },
-    "type": "project"
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8.3",
+    "cassie/common": "dev-main",
+    "gnikyt/basic-shopify-api": "^11.0",
+    "guzzlehttp/guzzle": "^7.2",
+    "http-interop/http-factory-guzzle": "^1.2",
+    "laravel/framework": "^11.0",
+    "laravel/sanctum": "^4.0",
+    "laravel/scout": "^10.6",
+    "laravel/telescope": "^5.2",
+    "meilisearch/meilisearch-php": "^1.6",
+    "php-http/guzzle7-adapter": "^1.0",
+    "typesense/laravel-scout-typesense-driver": "^5.2"
+  },
+  "require-dev": {
+    "fakerphp/faker": "^1.9.1",
+    "larastan/larastan": "^2.9",
+    "laravel/pail": "*",
+    "laravel/pint": "^1.16",
+    "laravel/sail": "^1.18",
+    "laravel/tinker": "*",
+    "mockery/mockery": "^1.4.4",
+    "nunomaduro/collision": "^8.1",
+    "phpunit/phpunit": "^10.1",
+    "spatie/laravel-ignition": "^2.0",
+    "tightenco/duster": "^3.0",
+    "worksome/envy": "^1.3"
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ],
+    "post-create-project-cmd": [
+      "@php artisan key:generate --ansi"
+    ],
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-update-cmd": [
+      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    ],
+    "phpstan": [
+      "./vendor/bin/phpstan analyze --memory-limit=2G"
+    ],
+    "test": [
+      "php artisan migrate --env=testing",
+      "php artisan test"
+    ],
+    "dev": [
+      "Composer\\Config::disableProcessTimeout",
+      "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" --names=server,queue,logs"
+    ]
+  },
+  "type": "project"
 }
