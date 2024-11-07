@@ -4,6 +4,7 @@ namespace Tests\Feature\Typesense;
 
 use App\Models\Page;
 use App\Models\Typesense\TypesensePage;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase;
 
@@ -14,6 +15,8 @@ class PageTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->actingAs(User::factory()->create());
 
         Page::factory()->createMany([
             [
