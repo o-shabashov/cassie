@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::controller(IndexationController::class)->group(function () {
-        Route::post('full-reindex', 'fullReindex');
-    });
+});
+Route::controller(IndexationController::class)->group(function () {
+    Route::post('full-reindex', 'fullReindex');
 });

@@ -3,7 +3,6 @@
 namespace App\Models\Meilisearch;
 
 use App\Auth;
-use App\Models\User;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
@@ -28,8 +27,8 @@ class MeilisearchProduct extends \App\Models\Product
         ];
     }
 
-    public function searchableAs(?User $user = null): string
+    public function searchableAs(): string
     {
-        return sprintf('products_%s', Auth::user() ? Auth::user()->id : $user->id);
+        return sprintf('products_%s', Auth::user()->id);
     }
 }

@@ -60,19 +60,19 @@ class User extends Authenticatable
         ];
     }
 
-    public static function generateSettings(?User $user = null): array
+    public static function generateSettings(): array
     {
         return [
             'meilisearch' => [
                 'host'                => config('scout.meilisearch.host'),
-                'products_index_name' => (new MeilisearchProduct)->searchableAs($user),
+                'products_index_name' => (new MeilisearchProduct)->searchableAs(),
                 'api_key'             => config('scout.meilisearch.key'), // FIXME should be user specific
                 'search_only_api_key' => 'key', // FIXME
             ],
             'typesense' => array_merge(
                 Arr::random(config('scout.typesense.nodes')),
                 [
-                    'products_index_name' => (new TypesenseProduct)->searchableAs($user),
+                    'products_index_name' => (new TypesenseProduct)->searchableAs(),
                     'api_key'             => 'key', // FIXME should be user specific
                     'search_only_api_key' => 'key', // FIXME
                 ],

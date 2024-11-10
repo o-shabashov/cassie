@@ -3,7 +3,6 @@
 namespace App\Models\Typesense;
 
 use App\Auth;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
@@ -70,8 +69,8 @@ class TypesenseProduct extends \App\Models\Product implements TypesenseDocument
         ];
     }
 
-    public function searchableAs(?User $user = null): string
+    public function searchableAs(): string
     {
-        return sprintf('products_%s', Auth::user() ? Auth::user()->id : $user->id);
+        return sprintf('products_%s', Auth::user()->id);
     }
 }

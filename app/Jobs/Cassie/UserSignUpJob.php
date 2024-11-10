@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Cassie;
 
+use App\Auth;
 use App\Enums\SearchEngines;
 use App\Models\ShopifyAdmin\ShopifyAdminUser;
 use App\Models\User;
@@ -21,6 +22,7 @@ class UserSignUpJob extends BaseCassieHighQueueJob
                 'shopify_access_token' => $this->shopifyUserDto->password,
             ]
         );
+        Auth::login($user);
 
         $user->settings       = User::generateSettings($user);
         $user->current_engine = $user->current_engine ?? Arr::random(SearchEngines::active());
@@ -48,5 +50,7 @@ class UserSignUpJob extends BaseCassieHighQueueJob
             'cassie_id'           => $user->id,
             'cassie_access_token' => $user->createToken($this->shopifyUserDto->name)->plainTextToken,
         ]);
+
+        DoFullReindexJob::dispatch($this->shopifyUserDto);
     }
 }
