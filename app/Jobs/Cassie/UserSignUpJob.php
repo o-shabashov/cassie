@@ -24,7 +24,7 @@ class UserSignUpJob extends BaseCassieHighQueueJob
         );
         Auth::login($user);
 
-        $user->settings       = User::generateSettings($user);
+        $user->settings       = User::generateSettings();
         $user->current_engine = $user->current_engine ?? Arr::random(SearchEngines::active());
         $user->save();
         $user->tokens()?->delete();
