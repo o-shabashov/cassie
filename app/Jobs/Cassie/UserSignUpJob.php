@@ -37,7 +37,8 @@ class UserSignUpJob extends BaseCassieHighQueueJob
         try {
             DB::connection('user_db_template')->statement("CREATE DATABASE $database");
         } catch (Exception $e) {
-            Log::info($e->getMessage());
+            Log::error($e->getMessage());
+            $this->fail($e);
         }
 
         Artisan::call('migrate', [
