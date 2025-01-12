@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
       args:
         WWWGROUP: '${WWWGROUP}'
+    restart: always
     image: sail-8.3/app
     extra_hosts:
       - 'host.docker.internal:host-gateway'
@@ -29,6 +30,7 @@ services:
       dockerfile: Dockerfile
       args:
         WWWGROUP: '${WWWGROUP}'
+    restart: always
     command: 'php artisan queue:work --verbose --tries=3 --timeout=60'
     image: sail-8.3/app
     extra_hosts:

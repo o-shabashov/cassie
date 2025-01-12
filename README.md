@@ -12,6 +12,7 @@ composer i
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate
 ./vendor/bin/sail artisan migrate --env=testing
+./vendor/bin/sail artisan migrate --database user_db_template
 ./vendor/bin/sail artisan db:seed
 ./vendor/bin/sail queue:listen
 ```
