@@ -21,8 +21,10 @@ composer i
 ## MVP
 * [X] Add basic Shopify api
 * [X] Products data import by the GraphQL
+* [ ] GUI minibar search
+* [ ] GUI Search results Typesense
+* [ ] GUI Search results Meilisearch
 * [ ] Basic search features - synonyms, merchandise, etc.
-* [ ] GUI search (docsearch.js)
 * [ ] Client admin
 * [ ] Tariffs and money checkout
 
@@ -31,6 +33,8 @@ composer i
 * [ ] Survive data structure changes - is search and indexation will work?
 * [ ] Generate custom models in runtime?
 * [ ] Convert schemas typesense <=> meilisearch
+* [ ] Move shopify-extensions to the shopify-admin php project
+* [ ] Add ability to re-install search result page and search minibar in the admin by the button
 
 # Drivers
 
