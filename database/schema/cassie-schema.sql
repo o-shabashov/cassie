@@ -149,60 +149,6 @@ ALTER SEQUENCE public.personal_access_tokens_id_seq OWNED BY public.personal_acc
 
 
 --
--- Name: telescope_entries; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.telescope_entries (
-    sequence bigint NOT NULL,
-    uuid uuid NOT NULL,
-    batch_id uuid NOT NULL,
-    family_hash character varying(255),
-    should_display_on_index boolean DEFAULT true NOT NULL,
-    type character varying(20) NOT NULL,
-    content text NOT NULL,
-    created_at timestamp(0) without time zone
-);
-
-
---
--- Name: telescope_entries_sequence_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.telescope_entries_sequence_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: telescope_entries_sequence_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.telescope_entries_sequence_seq OWNED BY public.telescope_entries.sequence;
-
-
---
--- Name: telescope_entries_tags; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.telescope_entries_tags (
-    entry_uuid uuid NOT NULL,
-    tag character varying(255) NOT NULL
-);
-
-
---
--- Name: telescope_monitoring; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.telescope_monitoring (
-    tag character varying(255) NOT NULL
-);
-
-
---
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -261,13 +207,6 @@ ALTER TABLE ONLY public.personal_access_tokens ALTER COLUMN id SET DEFAULT nextv
 
 
 --
--- Name: telescope_entries sequence; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.telescope_entries ALTER COLUMN sequence SET DEFAULT nextval('public.telescope_entries_sequence_seq'::regclass);
-
-
---
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -323,38 +262,6 @@ ALTER TABLE ONLY public.personal_access_tokens
 
 
 --
--- Name: telescope_entries telescope_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.telescope_entries
-    ADD CONSTRAINT telescope_entries_pkey PRIMARY KEY (sequence);
-
-
---
--- Name: telescope_entries_tags telescope_entries_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.telescope_entries_tags
-    ADD CONSTRAINT telescope_entries_tags_pkey PRIMARY KEY (entry_uuid, tag);
-
-
---
--- Name: telescope_entries telescope_entries_uuid_unique; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.telescope_entries
-    ADD CONSTRAINT telescope_entries_uuid_unique UNIQUE (uuid);
-
-
---
--- Name: telescope_monitoring telescope_monitoring_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.telescope_monitoring
-    ADD CONSTRAINT telescope_monitoring_pkey PRIMARY KEY (tag);
-
-
---
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -367,49 +274,6 @@ ALTER TABLE ONLY public.users
 --
 
 CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_index ON public.personal_access_tokens USING btree (tokenable_type, tokenable_id);
-
-
---
--- Name: telescope_entries_batch_id_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX telescope_entries_batch_id_index ON public.telescope_entries USING btree (batch_id);
-
-
---
--- Name: telescope_entries_created_at_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX telescope_entries_created_at_index ON public.telescope_entries USING btree (created_at);
-
-
---
--- Name: telescope_entries_family_hash_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX telescope_entries_family_hash_index ON public.telescope_entries USING btree (family_hash);
-
-
---
--- Name: telescope_entries_tags_tag_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX telescope_entries_tags_tag_index ON public.telescope_entries_tags USING btree (tag);
-
-
---
--- Name: telescope_entries_type_should_display_on_index_index; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX telescope_entries_type_should_display_on_index_index ON public.telescope_entries USING btree (type, should_display_on_index);
-
-
---
--- Name: telescope_entries_tags telescope_entries_tags_entry_uuid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.telescope_entries_tags
-    ADD CONSTRAINT telescope_entries_tags_entry_uuid_foreign FOREIGN KEY (entry_uuid) REFERENCES public.telescope_entries(uuid) ON DELETE CASCADE;
 
 
 --
