@@ -14,7 +14,6 @@ composer i
 ./vendor/bin/sail artisan migrate --env=testing
 ./vendor/bin/sail artisan migrate --database user_db_template
 ./vendor/bin/sail artisan db:seed
-./vendor/bin/sail queue:listen
 ```
 
 # Roadmap
@@ -26,9 +25,9 @@ composer i
 * [ ] GUI Search results Meilisearch
 * [ ] Basic search features - synonyms, merchandise, etc.
 * [ ] Client admin
-* [ ] Tariffs and money checkout
 
 ## Later
+* [ ] Tariffs and money checkout
 * [ ] Ability to set columns weight for the PgSQL driver
 * [ ] Survive data structure changes - is search and indexation will work?
 * [ ] Generate custom models in runtime?

@@ -23,7 +23,13 @@ class ProductTest extends TestCase
         $client->index((new MeilisearchProduct)->searchableAs())
             ->updateSettings(config('scout.meilisearch.index-settings.'.MeilisearchProduct::class));
 
-        Product::factory()->createMany([
+        // Получаем имя tenant-соединения
+        $tenantConnection = Product::asTenant()->getConnection()->getName();
+
+        // Создаем продукты через фабрику с указанием соединения
+        Product::factory()
+               ->connection($tenantConnection) // Явно указываем соединение
+               ->createMany([
             [
                 'title'  => 'yoda',
                 'fields' => ['title' => 'fake me', 'description' => 'anakin force should you'],
