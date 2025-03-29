@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +12,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'id'       => 1,
+            'name'     => 'Cassie Test User',
+            'settings' => [
+                'typesense'   => [
+                    'host'                => 'typesense',
+                    'path'                => '',
+                    'port'                => '8108',
+                    'api_key'             => 'key',
+                    'protocol'            => 'http',
+                    'products_index_name' => 'products_1',
+                    'search_only_api_key' => 'key',
+                ],
+                'meilisearch' => [
+                    'host'                => 'http://meilisearch:7700',
+                    'api_key'             => '',
+                    'products_index_name' => 'products_1',
+                    'search_only_api_key' => 'key',
+                ],
+            ],
+        ]);
     }
 }
