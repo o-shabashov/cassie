@@ -5,7 +5,8 @@
 
 
 # Install
-
+1. First things first - install tanker - [https://github.com/o-shabashov/tanker](https://github.com/o-shabashov/tanker?tab=readme-ov-file#install)
+2. Now, install cassie:
 ```shell
 cp .env.example .env
 composer i
