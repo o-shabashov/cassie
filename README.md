@@ -8,6 +8,8 @@
 1. First things first - please install [tanker](https://github.com/o-shabashov/tanker?tab=readme-ov-file#install)
 2. Now, install cassie:
 ```shell
+git clone https://github.com/o-shabashov/cassie/blob/main/README.md
+cd cassie
 cp .env.example .env
 composer i
 ./vendor/bin/sail up -d
