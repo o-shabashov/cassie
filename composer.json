@@ -25,10 +25,7 @@
     },
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true,
-    "github-oauth": {
-      "github.com": "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"
-    }
+    "sort-packages": true
   },
   "extra": {
     "laravel": {

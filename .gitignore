@@ -20,3 +20,4 @@ yarn-error.log
 /storage/pail
 /.DS_Store
 /.npm
+.aider*
