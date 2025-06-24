@@ -14,9 +14,15 @@ trait HasTenant
 {
     public static function asTenant(?User $user = null): Builder
     {
-        $user                     = $user ?? Auth::user();
-        $database                 = 'user_db_'.$user->id;
-        $userDbConfig             = config('database.connections.user_db_template');
+        $user = $user ?? Auth::user();
+
+        if (app()->environment('testing')) {
+            $database = 'user_db_testing';
+        } else {
+            $database = 'user_db_'.$user->id;
+        }
+
+        $userDbConfig = config('database.connections.user_db_template');
         $userDbConfig['database'] = $database;
         config(["database.connections.$database" => $userDbConfig]);
 

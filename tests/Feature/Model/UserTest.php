@@ -60,6 +60,8 @@ class UserTest extends TestCase
             ]
         );
 
+        $this->actingAs($user);
+
         $user->settings = User::generateSettings($user);
 
         $this->assertEquals(
